@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../models/User.h"
-#include "../include/ui/console.h"
+#include "./models/User.h"
+#include "./include/ui/console.h"
 
 using namespace std;
 
