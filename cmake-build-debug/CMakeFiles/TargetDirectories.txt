@@ -1,0 +1,3 @@
+/Users/nguyenngoc/Desktop/Bluecoglobal/C++/BTL/PTIT-CPlusPlus-BTL-Nhom6/cmake-build-debug/CMakeFiles/reward_wallet.dir
+/Users/nguyenngoc/Desktop/Bluecoglobal/C++/BTL/PTIT-CPlusPlus-BTL-Nhom6/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/nguyenngoc/Desktop/Bluecoglobal/C++/BTL/PTIT-CPlusPlus-BTL-Nhom6/cmake-build-debug/CMakeFiles/rebuild_cache.dir
