@@ -5,97 +5,106 @@
 
 using namespace std;
 
+// Phần định nghĩa màu sắc cho từng hệ điều hành
 #ifdef _WIN32
+// Thiết lập màu chữ trên Windows
 void setColor(ConsoleColor color)
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, static_cast<WORD>(color));
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Lấy handle của console
+    SetConsoleTextAttribute(hConsole, static_cast<WORD>(color)); // Áp dụng màu
 }
 #else
+// Thiết lập màu chữ trên macOS/Linux dùng ANSI escape codes
 void setColor(ConsoleColor color)
 {
-    // ANSI escape codes for colors
     switch (color)
     {
         case ConsoleColor::Red:
-            cout << "\033[1;31m";
+            cout << "\033[1;31m"; // Màu đỏ đậm
             break;
         case ConsoleColor::Green:
-            cout << "\033[1;32m";
+            cout << "\033[1;32m"; // Màu xanh lá đậm
             break;
         case ConsoleColor::Yellow:
-            cout << "\033[1;33m";
+            cout << "\033[1;33m"; // Màu vàng đậm
             break;
         case ConsoleColor::Blue:
-            cout << "\033[1;34m";
+            cout << "\033[1;34m"; // Màu xanh dương đậm
             break;
         case ConsoleColor::Cyan:
-            cout << "\033[1;36m";
+            cout << "\033[1;36m"; // Màu cyan đậm
             break;
         case ConsoleColor::Magenta:
-            cout << "\033[1;35m";
+            cout << "\033[1;35m"; // Màu magenta đậm
             break;
         case ConsoleColor::White:
-            cout << "\033[1;37m";
+            cout << "\033[1;37m"; // Màu trắng đậm
             break;
-        default: // Default
-            cout << "\033[0m";
+        default: // Màu mặc định
+            cout << "\033[0m"; // Reset về màu ban đầu
             break;
     }
 }
 #endif
 
+// Reset màu về mặc định
 void resetColor()
 {
     setColor(ConsoleColor::Default);
 }
 
+// In thông báo ra console với màu sắc
 void print(const string &message, bool addNewLine, ConsoleColor color)
 {
-    setColor(color);
-    cout << message;
+    setColor(color); // Thiết lập màu
+    cout << message; // In nội dung
     if (addNewLine)
     {
-        cout << endl;
+        cout << endl; // Xuống dòng nếu cần
     }
-    resetColor();
+    resetColor(); // Reset lại màu
 }
 
+// In tiêu đề với định dạng đặc biệt
 void printTitle(const string &text, ConsoleColor color)
 {
     setColor(color);
-    cout << "\n=== " << text << " ===\n";
+    cout << "\n=== " << text << " ===\n"; // Thêm dấu === xung quanh tiêu đề
     resetColor();
 }
 
+// Nhập dữ liệu từ người dùng với prompt có màu
 string input(const string &prompt, ConsoleColor color)
 {
     string value;
     setColor(color);
-    cout << prompt;
+    cout << prompt; // Hiển thị prompt với màu
     resetColor();
 
-    // Xử lý đa nền tảng cho việc nhập liệu
-    getline(cin, value);
+    // Xử lý nhập liệu đa nền tảng
+    getline(cin, value); // Đọc dòng đầu tiên
+
+    // Nếu dòng đầu rỗng (do trước đó có dùng cin >>)
     if (value.empty()) {
-        // Nếu getline không lấy được dữ liệu (do trước đó có cin >> something)
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, value);
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bỏ qua ký tự thừa
+        getline(cin, value); // Đọc lại
     }
     return value;
 }
 
+// Tạm dừng chương trình chờ nhấn Enter
 void pause(ConsoleColor color)
 {
     setColor(color);
     cout << "Press Enter to continue...";
     resetColor();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Đợi đến khi nhấn Enter
 }
 
+// Tạo chuỗi ngẫu nhiên 4 chữ số
 string random4Digits()
 {
-    srand(static_cast<unsigned int>(time(nullptr)));
-    int num = rand() % 9000 + 1000; // Random number between 1000 and 9999
-    return to_string(num);
+    srand(static_cast<unsigned int>(time(nullptr))); // Khởi tạo seed ngẫu nhiên
+    const int num = rand() % 9000 + 1000; // Số ngẫu nhiên từ 1000 đến 9999
+    return to_string(num); // Chuyển thành chuỗi
 }
