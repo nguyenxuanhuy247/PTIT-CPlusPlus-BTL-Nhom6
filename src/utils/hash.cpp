@@ -1,4 +1,4 @@
-#include "../src/include/security/hash.h"
+#include "../include/security/hash.h"
 #include <sstream>
 #include <iomanip>
 #include <vector>

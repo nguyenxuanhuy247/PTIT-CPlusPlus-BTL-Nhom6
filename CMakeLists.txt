@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include header folders
 include_directories(
-    include
-    entities
+    src/include
+    src/models
     lib/sha
     lib 
 )

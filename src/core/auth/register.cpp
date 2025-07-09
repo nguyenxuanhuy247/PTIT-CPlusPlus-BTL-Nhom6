@@ -1,8 +1,8 @@
 #include "register.h"
-#include "../include/ui/console.h"
+#include "ui/console.h"
 #include "../models/User.h"
 #include "../models/Wallet.h"
-#include "../include/UserFileHelper.h"
+#include "../include/userFileHelper.h"
 #include "../include/DataStore.h"
 #include "../lib/nlohmann/json.hpp"
 
