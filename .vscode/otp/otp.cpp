@@ -1,5 +1,6 @@
-#include "ui/otp.h"
-#include "ui/console.h"
+#include "otp.h"
+#include "../ui/console.h"
+
 #include <ctime>
 
 static std::unordered_map<std::string, std::pair<std::string, std::time_t>> otpStorage;

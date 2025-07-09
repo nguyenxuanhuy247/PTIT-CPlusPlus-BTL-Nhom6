@@ -5,9 +5,9 @@ project(RewardWalletApp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include header folders
+# Include header folders (bổ sung src/include)
 include_directories(
-    include
+    src/include      # <-- Đã thêm dòng này để tìm otp.h
     entities
     lib/sha
     lib 
