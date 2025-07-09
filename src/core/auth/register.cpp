@@ -1,5 +1,5 @@
 #include "register.h"
-#include "../src/include/ui/console.h"
+#include "../utils/console.h"
 #include "../models/User.h"
 #include "../models/Wallet.h"
 #include "../include/userFileHelper.h"
@@ -13,51 +13,68 @@
 using json = nlohmann::json;
 using namespace DataStore;
 
-bool usernameExists(const std::string& username) {
-    for (const auto& u : allUsers) {
-        if (u.getUsername() == username) return true;
+bool usernameExists(const std::string &username)
+{
+    for (const auto &u : allUsers)
+    {
+        if (u.getUsername() == username)
+            return true;
     }
     return false;
 }
 
-bool phoneExists(const std::string& phone) {
-    for (const auto& u : allUsers) {
-        if (u.getPhoneNumber() == phone) return true;
+bool phoneExists(const std::string &phone)
+{
+    for (const auto &u : allUsers)
+    {
+        if (u.getPhoneNumber() == phone)
+            return true;
     }
     return false;
 }
 
-void registerNewUser(bool calledByAdmin)  {
+void registerNewUser(bool calledByAdmin)
+{
     std::string username;
     std::string phone;
     std::string rawPassword;
     bool isAutoPass;
 
-    do {
+    do
+    {
         username = input("Tao ten dang nhap: ");
-        if (username.empty()) {
+        if (username.empty())
+        {
             print("Username khong duoc de trong.", true);
             continue;
         }
-        if (usernameExists(username)) {
+        if (usernameExists(username))
+        {
             print("Username da ton tai. Hay nhap lai.", true);
-        } else break;
+        }
+        else
+            break;
     } while (true);
 
-    do {
+    do
+    {
         phone = input("Nhap so dien thoai: ");
-        if (phone.empty()) {
+        if (phone.empty())
+        {
             print("So dien thoai khong duoc de trong.", true);
             continue;
         }
-        if (phoneExists(phone)) {
+        if (phoneExists(phone))
+        {
             print("So dien thoai da ton tai. Hay nhap lai.", true);
-        } else break;
+        }
+        else
+            break;
     } while (true);
 
     if (!calledByAdmin)
     {
-            rawPassword = input("Nhap mat khau (hoac de trong): ");
+        rawPassword = input("Nhap mat khau (hoac de trong): ");
     }
 
     if (rawPassword.empty())
@@ -65,7 +82,7 @@ void registerNewUser(bool calledByAdmin)  {
         rawPassword = random4Digits();
         isAutoPass = true;
     }
-    
+
     std::string hashedPassword = PasswordUtils::hashPassword(rawPassword);
 
     Wallet wallet;
@@ -76,17 +93,21 @@ void registerNewUser(bool calledByAdmin)  {
     bool okUser = UserFileHelper::saveNewUser(newUser);
     bool okWallet = UserFileHelper::saveNewWallet(wallet);
 
-    if (okUser && okWallet) {
+    if (okUser && okWallet)
+    {
         allUsers.push_back(newUser);
         allWallets[walletId] = wallet;
 
-        if (calledByAdmin) {
+        if (calledByAdmin)
+        {
             // bạn có thể log lại người tạo là admin nếu cần
             print("Tai khoan nay duoc tao boi quan ly.", true);
         }
         print("Dang ky thanh cong! Mat khau cua tai khoan (" + username + ") la: " + rawPassword, true);
         print("Tro ve man hinh truoc.", true);
-    } else {
+    }
+    else
+    {
         print("Dang ky that bai.", true);
     }
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include "../include/ui/console.h"
+#include "./console.h"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ using namespace std;
 // Thiết lập màu chữ trên Windows
 void setColor(ConsoleColor color)
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Lấy handle của console
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);           // Lấy handle của console
     SetConsoleTextAttribute(hConsole, static_cast<WORD>(color)); // Áp dụng màu
 }
 #else
@@ -19,30 +19,30 @@ void setColor(ConsoleColor color)
 {
     switch (color)
     {
-        case ConsoleColor::Red:
-            cout << "\033[1;31m"; // Màu đỏ đậm
-            break;
-        case ConsoleColor::Green:
-            cout << "\033[1;32m"; // Màu xanh lá đậm
-            break;
-        case ConsoleColor::Yellow:
-            cout << "\033[1;33m"; // Màu vàng đậm
-            break;
-        case ConsoleColor::Blue:
-            cout << "\033[1;34m"; // Màu xanh dương đậm
-            break;
-        case ConsoleColor::Cyan:
-            cout << "\033[1;36m"; // Màu cyan đậm
-            break;
-        case ConsoleColor::Magenta:
-            cout << "\033[1;35m"; // Màu magenta đậm
-            break;
-        case ConsoleColor::White:
-            cout << "\033[1;37m"; // Màu trắng đậm
-            break;
-        default: // Màu mặc định
-            cout << "\033[0m"; // Reset về màu ban đầu
-            break;
+    case ConsoleColor::Red:
+        cout << "\033[1;31m"; // Màu đỏ đậm
+        break;
+    case ConsoleColor::Green:
+        cout << "\033[1;32m"; // Màu xanh lá đậm
+        break;
+    case ConsoleColor::Yellow:
+        cout << "\033[1;33m"; // Màu vàng đậm
+        break;
+    case ConsoleColor::Blue:
+        cout << "\033[1;34m"; // Màu xanh dương đậm
+        break;
+    case ConsoleColor::Cyan:
+        cout << "\033[1;36m"; // Màu cyan đậm
+        break;
+    case ConsoleColor::Magenta:
+        cout << "\033[1;35m"; // Màu magenta đậm
+        break;
+    case ConsoleColor::White:
+        cout << "\033[1;37m"; // Màu trắng đậm
+        break;
+    default:               // Màu mặc định
+        cout << "\033[0m"; // Reset về màu ban đầu
+        break;
     }
 }
 #endif
@@ -85,9 +85,10 @@ string input(const string &prompt, ConsoleColor color)
     getline(cin, value); // Đọc dòng đầu tiên
 
     // Nếu dòng đầu rỗng (do trước đó có dùng cin >>)
-    if (value.empty()) {
+    if (value.empty())
+    {
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bỏ qua ký tự thừa
-        getline(cin, value); // Đọc lại
+        getline(cin, value);                                 // Đọc lại
     }
     return value;
 }
@@ -105,6 +106,6 @@ void pause(ConsoleColor color)
 string random4Digits()
 {
     srand(static_cast<unsigned int>(time(nullptr))); // Khởi tạo seed ngẫu nhiên
-    const int num = rand() % 9000 + 1000; // Số ngẫu nhiên từ 1000 đến 9999
-    return to_string(num); // Chuyển thành chuỗi
+    const int num = rand() % 9000 + 1000;            // Số ngẫu nhiên từ 1000 đến 9999
+    return to_string(num);                           // Chuyển thành chuỗi
 }

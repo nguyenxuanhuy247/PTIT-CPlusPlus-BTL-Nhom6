@@ -1,6 +1,6 @@
-#include <iostream>
 #include "./models/User.h"
-#include "./include/ui/console.h"
+#include "./utils/console.h"
+#include "./core/auth/login.h"
 
 using namespace std;
 
@@ -14,11 +14,11 @@ int main()
 		{
 			printTitle("CHÀO MỪNG BẠN ĐẾN VỚI HỆ THỐNG VÍ ĐIỂM THƯỞNG");
 
-			print("Vui lòng lựa chọn :", true);
-			print("1. Đăng nhập", true);
-			print("2. Đăng ký", true);
-			print("3. Thêm dữ liệu", true);
-			print("0. Thoát", true);
+			print("Moi ban lua chon :", true);
+			print("1. Dang nhap", true);
+			print("2. Dang ky", true);
+			print("3. Them du lieu", true);
+			print("0. Quay lai", true);
 
 			string choiceStr = input("Lựa chọn của ban là: ");
 			try
@@ -27,8 +27,27 @@ int main()
 			}
 			catch (...)
 			{
-				print("Vui lòng chọn đúng só!", true);
+				print("Vui long chon dung so!", true);
 				continue;
+			}
+
+			switch (choice)
+			{
+			case 1: // Đăng nhập
+				user = handleLogin();
+				if (user.getRole() == UserRole::Failed)
+					pause();
+				break;
+			case 2: // Đăng ký
+				break;
+			case 3:
+				break;
+			case 0:
+				print("Goodbye!", true);
+				break;
+			default:
+				print("Wrong choice.", true);
+				break;
 			}
 		}
 		else
