@@ -3,9 +3,9 @@
 
 #include <unordered_map>
 #include <vector>
-#include "../entities/User.h"
-#include "../entities/Wallet.h"
-#include "../entities/Transaction.h"
+#include "../models/User.h"
+#include "../models/Wallet.h"
+#include "../models/Transaction.h"
 
 namespace DataStore {
     extern std::unordered_map<std::string, Wallet> allWallets;

@@ -1,8 +1,8 @@
 #include "../include/userFileHelper.h"  // Đã sửa chữ hoa/thường
-#include "../entities/User.h"
-#include "../entities/Wallet.h"
-#include "../entities/Transaction.h"
-#include "../entities/Config.h"
+#include "../models/User.h"
+#include "../models/Wallet.h"
+#include "../models/Transaction.h"
+#include "../models/Config.h"
 #include "../lib/nlohmann/json.hpp"
 #include <filesystem>
 #include <fstream>

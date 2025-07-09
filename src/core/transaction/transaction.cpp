@@ -1,4 +1,4 @@
-#include "../entities/Transaction.h"
+#include "../models/Transaction.h"
 #include "../include/userFileHelper.h"  // Đã sửa chữ hoa/thường
 #include "../include/dataStore.h"      // Đã sửa chữ hoa/thường
 #include <iostream>

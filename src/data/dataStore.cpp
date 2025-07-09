@@ -1,5 +1,5 @@
-#include "../include/DataStore.h"
-#include "../include/UserFileHelper.h"
+#include "../include/dataStore.h"
+#include "../include/userFileHelper.h"
 #include "../lib/nlohmann/json.hpp"
 
 using json = nlohmann::json;

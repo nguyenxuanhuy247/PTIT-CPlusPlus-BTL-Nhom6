@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include header folders (bổ sung src/include)
 include_directories(
-    src/include      # <-- Đã thêm dòng này để tìm otp.h
-    entities
+    src/include     # <-- Đã thêm dòng này để tìm otp.h
+    src/models
     lib/sha
     lib 
 )

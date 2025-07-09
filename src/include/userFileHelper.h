@@ -3,9 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "../entities/User.h"
-#include "../entities/Wallet.h"
-#include "../entities/Transaction.h"
+#include "../models/User.h"
+#include "../models/Wallet.h"
+#include "../models/Transaction.h"
 #include <ctime>
 #include <filesystem> // thêm thư viện cho thao tác file
 
