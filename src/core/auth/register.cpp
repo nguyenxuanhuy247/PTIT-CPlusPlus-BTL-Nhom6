@@ -1,9 +1,9 @@
 #include "register.h"
-#include "factory.h"
-#include "../entities/User.h"
-#include "../entities/Wallet.h"
-#include "../include/UserFileHelper.h"
-#include "../include/DataStore.h"
+#include "../src/include/ui/console.h"
+#include "../models/User.h"
+#include "../models/Wallet.h"
+#include "../include/userFileHelper.h"
+#include "../include/dataStore.h"
 #include "../lib/nlohmann/json.hpp"
 
 #include <iostream>
