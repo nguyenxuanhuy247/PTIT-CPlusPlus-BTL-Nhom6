@@ -2,8 +2,8 @@
 #include "../utils/console.h"
 #include "../models/User.h"
 #include "../models/Wallet.h"
-#include "../include/userFileHelper.h"
-#include "../include/dataStore.h"
+#include "../utils/userFileHelper.h"
+#include "../data/dataStore.h"
 #include "../lib/nlohmann/json.hpp"
 
 #include <iostream>

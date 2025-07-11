@@ -5,7 +5,7 @@
 #define USER_H // Định nghĩa USER_H để tránh include nhiều lần
 
 #include <string>
-#include "../include/security/hash.h"
+#include "../utils/hash.h"
 
 // Enum đại diện cho vai trò người dùng
 enum class UserRole

@@ -1,74 +1,93 @@
-#include "../include/dataStore.h"
-#include "../include/userFileHelper.h"
+#include "./dataStore.h"
+#include "../utils/userFileHelper.h"
 #include "../lib/nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
-namespace DataStore {
+namespace DataStore
+{
     std::unordered_map<std::string, Wallet> allWallets;
     std::vector<Transaction> allTransactions;
     std::vector<User> allUsers;
 
-    const std::unordered_map<std::string, Wallet>& getAllWallets() {
+    const std::unordered_map<std::string, Wallet> &getAllWallets()
+    {
         return allWallets;
     }
 
-    const std::vector<Transaction>& getAllTransactions() {
+    const std::vector<Transaction> &getAllTransactions()
+    {
         return allTransactions;
     }
 
-    const std::vector<User>& getAllUsers() {
+    const std::vector<User> &getAllUsers()
+    {
         return allUsers;
     }
 
-    Wallet* getWalletById(const std::string& id) {
+    Wallet *getWalletById(const std::string &id)
+    {
         auto it = allWallets.find(id);
-        if (it != allWallets.end()) return &it->second;
+        if (it != allWallets.end())
+            return &it->second;
         return nullptr;
     }
 
-    User* getUserByPhone(const std::string& phone) {
-        for (auto& user : allUsers) {
+    User *getUserByPhone(const std::string &phone)
+    {
+        for (auto &user : allUsers)
+        {
             if (user.getPhoneNumber() == phone)
                 return &user;
         }
         return nullptr;
     }
 
-     bool syncWallet(const std::string& walletId) {
+    bool syncWallet(const std::string &walletId)
+    {
         auto it = allWallets.find(walletId);
-        if (it == allWallets.end()) return false;
+        if (it == allWallets.end())
+            return false;
         return UserFileHelper::saveUpdatedWallet(it->second);
     }
 
-bool syncUser(const User& updatedUser) {
-    // Cập nhật user tương ứng trong allUsers
-    for (auto& user : allUsers) {
-        if (user.getUsername() == updatedUser.getUsername()) {
-            user = updatedUser; // ✅ Ghi đè user trong allUsers
-            break;
+    bool syncUser(const User &updatedUser)
+    {
+        // Cập nhật user tương ứng trong allUsers
+        for (auto &user : allUsers)
+        {
+            if (user.getUsername() == updatedUser.getUsername())
+            {
+                user = updatedUser; // ✅ Ghi đè user trong allUsers
+                break;
+            }
         }
+
+        // Ghi file
+        return UserFileHelper::saveUpdatedUser(updatedUser);
     }
 
-    // Ghi file
-    return UserFileHelper::saveUpdatedUser(updatedUser);
-}
-
-    void syncAll() {
-        for (const auto& [id, wallet] : allWallets) {
+    void syncAll()
+    {
+        for (const auto &[id, wallet] : allWallets)
+        {
             UserFileHelper::saveUpdatedWallet(wallet);
         }
-        for (const auto& user : allUsers) {
+        for (const auto &user : allUsers)
+        {
             UserFileHelper::saveUpdatedUser(user);
         }
     }
-    
-    void loadAllUsers() {
+
+    void loadAllUsers()
+    {
         allUsers.clear();
         auto filenames = UserFileHelper::listFilesInCategory(FileCategory::User);
-        for (const auto& file : filenames) {
+        for (const auto &file : filenames)
+        {
             std::string content = UserFileHelper::readStringFromFile(file, FileCategory::User);
-            if (!content.empty()) {
+            if (!content.empty())
+            {
                 json j = json::parse(content);
                 User u;
                 u.setUsername(j.value("username", ""));
@@ -82,19 +101,23 @@ bool syncUser(const User& updatedUser) {
         }
     }
 
-    void loadAllWallets() {
+    void loadAllWallets()
+    {
         allWallets.clear();
         auto filenames = UserFileHelper::listFilesInCategory(FileCategory::Wallet);
-        for (const auto& file : filenames) {
+        for (const auto &file : filenames)
+        {
             std::string content = UserFileHelper::readStringFromFile(file, FileCategory::Wallet);
-            if (!content.empty()) {
+            if (!content.empty())
+            {
                 json j = json::parse(content);
 
                 std::string walletId = j.value("walletId", "");
                 int points = j.value("points", 0);
                 std::vector<std::string> txIds = j.value("transactionIds", std::vector<std::string>{});
 
-                if (!walletId.empty()) {
+                if (!walletId.empty())
+                {
                     Wallet w(walletId, points, txIds);
                     allWallets[walletId] = w;
                 }
@@ -102,14 +125,15 @@ bool syncUser(const User& updatedUser) {
         }
     }
 
-
-
-    void loadAllTransactions() {
+    void loadAllTransactions()
+    {
         allTransactions.clear();
         auto filenames = UserFileHelper::listFilesInCategory(FileCategory::TransactionLog);
-        for (const auto& file : filenames) {
+        for (const auto &file : filenames)
+        {
             std::string content = UserFileHelper::readStringFromFile(file, FileCategory::TransactionLog);
-            if (!content.empty()) {
+            if (!content.empty())
+            {
                 json j = json::parse(content);
                 TransactionType type = static_cast<TransactionType>(j.value("type", 1));
                 std::string from = j.value("from", "");
@@ -120,14 +144,15 @@ bool syncUser(const User& updatedUser) {
 
                 Transaction tx(type, from, to, amount);
                 tx.setTimestamp(timestamp);
-                tx.setTransactionId(txId);  // ✅ FIX: đảm bảo ID không bị sinh lại
+                tx.setTransactionId(txId); // ✅ FIX: đảm bảo ID không bị sinh lại
 
                 allTransactions.push_back(tx);
             }
         }
     }
 
-    void loadAllData() {
+    void loadAllData()
+    {
         loadAllUsers();
         loadAllWallets();
         loadAllTransactions();

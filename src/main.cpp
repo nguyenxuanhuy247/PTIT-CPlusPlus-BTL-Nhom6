@@ -12,7 +12,7 @@ int main()
 	{
 		if (user.getRole() == UserRole::Failed)
 		{
-			printTitle("CHÀO MỪNG BẠN ĐẾN VỚI HỆ THỐNG VÍ ĐIỂM THƯỞNG");
+			printTitle("CHAO MUNG BAN DEN VOI HE THONG VI DIEM THUONG:");
 
 			print("Moi ban lua chon :", true);
 			print("1. Dang nhap", true);
@@ -20,7 +20,7 @@ int main()
 			print("3. Them du lieu", true);
 			print("0. Quay lai", true);
 
-			string choiceStr = input("Lựa chọn của ban là: ");
+			string choiceStr = input("Lua chon cua ban la: ");
 			try
 			{
 				choice = stoi(choiceStr);
@@ -52,7 +52,6 @@ int main()
 		}
 		else
 		{
-			// Đã đăng nhập thành công
 		}
 	} while (choice != 0);
 

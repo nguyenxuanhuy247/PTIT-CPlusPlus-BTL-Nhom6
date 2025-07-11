@@ -1,9 +1,10 @@
-#include "../include/userFileHelper.h"  // Đã sửa chữ hoa/thường
+#include "./userFileHelper.h" // Đã sửa chữ hoa/thường
 #include "../models/User.h"
 #include "../models/Wallet.h"
-#include "../models/Transaction.h"
+#include "../core/transaction/transaction.h"
 #include "../models/Config.h"
 #include "../lib/nlohmann/json.hpp"
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -12,97 +13,113 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-bool UserFileHelper::writeStringToFile(const std::string& fileName, const std::string& content, FileCategory category) {
+bool UserFileHelper::writeStringToFile(const std::string &fileName, const std::string &content, FileCategory category)
+{
     std::string path = buildPath(fileName, category);
 
     std::ofstream outFile(path);
-    if (outFile.is_open()) {
+    if (outFile.is_open())
+    {
         outFile << content;
         outFile.close();
         return true;
-    } else {
+    }
+    else
+    {
         std::cerr << "Khong the mo file de ghi: " << path << "\n";
         return false;
     }
 }
 
-std::string UserFileHelper::readStringFromFile(const std::string& fileName, FileCategory category) {
+std::string UserFileHelper::readStringFromFile(const std::string &fileName, FileCategory category)
+{
     std::string path = buildPath(fileName, category);
 
     std::ifstream inFile(path);
-    if (inFile.is_open()) {
+    if (inFile.is_open())
+    {
         std::string content((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
         inFile.close();
         return content;
-    } else {
+    }
+    else
+    {
         std::cerr << "Khong the mo file de doc: " << path << "\n";
         return "";
     }
 }
 
-std::string UserFileHelper::buildPath(const std::string& fileName, FileCategory category) {
+std::string UserFileHelper::buildPath(const std::string &fileName, FileCategory category)
+{
     std::string baseDir;
-    switch (category) {
-        case FileCategory::User:
-            baseDir = USER_DATA_DIR;
-            break;
-        case FileCategory::Wallet:
-            baseDir = WALLET_DATA_DIR;
-            break;
-        case FileCategory::TransactionLog:
-            baseDir = TRANSACTION_DATA_DIR;
-            break;
+    switch (category)
+    {
+    case FileCategory::User:
+        baseDir = USER_DATA_DIR;
+        break;
+    case FileCategory::Wallet:
+        baseDir = WALLET_DATA_DIR;
+        break;
+    case FileCategory::TransactionLog:
+        baseDir = TRANSACTION_DATA_DIR;
+        break;
     }
 
-    if (!fs::exists(baseDir)) {
+    if (!fs::exists(baseDir))
+    {
         fs::create_directories(baseDir);
     }
 
     return baseDir + "/" + fileName;
 }
 
-std::string UserFileHelper::getCurrentDate() {
+std::string UserFileHelper::getCurrentDate()
+{
     time_t now = time(nullptr);
-    tm* t;
+    tm *t;
 
-    #ifdef _WIN32
-        tm timeInfo;
-        localtime_s(&timeInfo, &now);
-        t = &timeInfo;
-    #else
-        t = localtime(&now);
-    #endif
+#ifdef _WIN32
+    tm timeInfo;
+    localtime_s(&timeInfo, &now);
+    t = &timeInfo;
+#else
+    t = localtime(&now);
+#endif
 
     char buffer[11];
     strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
     return std::string(buffer);
 }
 
-std::string UserFileHelper::getCurrentDateTime() {
+std::string UserFileHelper::getCurrentDateTime()
+{
     time_t now = time(nullptr);
-    tm* t;
+    tm *t;
 
-    #ifdef _WIN32
-        tm timeInfo;
-        localtime_s(&timeInfo, &now);
-        t = &timeInfo;
-    #else
-        t = localtime(&now);
-    #endif
+#ifdef _WIN32
+    tm timeInfo;
+    localtime_s(&timeInfo, &now);
+    t = &timeInfo;
+#else
+    t = localtime(&now);
+#endif
 
     char buffer[20];
     strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", t);
     return std::string(buffer);
 }
 
-void UserFileHelper::backupOldFileIfExists(const std::string& path) {
-    if (!fs::exists(path)) return;
+void UserFileHelper::backupOldFileIfExists(const std::string &path)
+{
+    if (!fs::exists(path))
+        return;
 
     std::string date = getCurrentDate();
     std::string dateTime = getCurrentDateTime();
 
     std::string backupDir = "./backup/" + date;
-    if (!fs::exists(backupDir)) {
+    if (!fs::exists(backupDir))
+    {
         fs::create_directories(backupDir);
     }
 
@@ -113,7 +130,8 @@ void UserFileHelper::backupOldFileIfExists(const std::string& path) {
     fs::copy(path, backupPath, fs::copy_options::overwrite_existing);
 }
 
-bool UserFileHelper::saveNewUser(const User& user) {
+bool UserFileHelper::saveNewUser(const User &user)
+{
     json j;
     j["username"] = user.getUsername();
     j["password"] = user.getPassword();
@@ -130,7 +148,8 @@ bool UserFileHelper::saveNewUser(const User& user) {
     return writeStringToFile(fileName, j.dump(4), FileCategory::User);
 }
 
-bool UserFileHelper::saveNewWallet(const Wallet& wallet) {
+bool UserFileHelper::saveNewWallet(const Wallet &wallet)
+{
     json j;
     j["walletId"] = wallet.getWalletId();
     j["points"] = wallet.getPoints();
@@ -143,7 +162,8 @@ bool UserFileHelper::saveNewWallet(const Wallet& wallet) {
     return writeStringToFile(fileName, j.dump(4), FileCategory::Wallet);
 }
 
-bool UserFileHelper::saveTransactionLog(const Transaction& tx) {
+bool UserFileHelper::saveTransactionLog(const Transaction &tx)
+{
     json j;
     j["transactionId"] = tx.getTransactionId();
     j["type"] = static_cast<int>(tx.getType());
@@ -156,7 +176,8 @@ bool UserFileHelper::saveTransactionLog(const Transaction& tx) {
     return writeStringToFile(fileName, j.dump(4), FileCategory::TransactionLog);
 }
 
-bool UserFileHelper::saveUpdatedUser(const User& user) {
+bool UserFileHelper::saveUpdatedUser(const User &user)
+{
     json j;
     j["username"] = user.getUsername();
     j["password"] = user.getPassword();
@@ -172,7 +193,8 @@ bool UserFileHelper::saveUpdatedUser(const User& user) {
     return writeStringToFile(fileName, j.dump(4), FileCategory::User);
 }
 
-bool UserFileHelper::saveUpdatedWallet(const Wallet& wallet) {
+bool UserFileHelper::saveUpdatedWallet(const Wallet &wallet)
+{
     json j;
     j["walletId"] = wallet.getWalletId();
     j["points"] = wallet.getPoints();
@@ -185,14 +207,15 @@ bool UserFileHelper::saveUpdatedWallet(const Wallet& wallet) {
     return writeStringToFile(fileName, j.dump(4), FileCategory::Wallet);
 }
 
-
-
-std::vector<std::string> UserFileHelper::listFilesInCategory(FileCategory category) {
+std::vector<std::string> UserFileHelper::listFilesInCategory(FileCategory category)
+{
     std::vector<std::string> files;
     std::string baseDir = buildPath("", category);
 
-    for (const auto& entry : fs::directory_iterator(baseDir)) {
-        if (entry.path().extension() == ".json") {
+    for (const auto &entry : fs::directory_iterator(baseDir))
+    {
+        if (entry.path().extension() == ".json")
+        {
             files.push_back(entry.path().filename().string());
         }
     }

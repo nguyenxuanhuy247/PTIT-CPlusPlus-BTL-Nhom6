@@ -5,28 +5,29 @@
 #include <vector>
 #include "../models/User.h"
 #include "../models/Wallet.h"
-#include "../models/Transaction.h"
+#include "../core/transaction/transaction.h"
 
-namespace DataStore {
+namespace DataStore
+{
     extern std::unordered_map<std::string, Wallet> allWallets;
     extern std::vector<Transaction> allTransactions;
     extern std::vector<User> allUsers;
 
-    const std::unordered_map<std::string, Wallet>& getAllWallets();
-    const std::vector<Transaction>& getAllTransactions();
-    const std::vector<User>& getAllUsers();
+    const std::unordered_map<std::string, Wallet> &getAllWallets();
+    const std::vector<Transaction> &getAllTransactions();
+    const std::vector<User> &getAllUsers();
 
     void loadAllData();
     void loadAllUsers();
     void loadAllWallets();
     void loadAllTransactions();
 
-    Wallet* getWalletById(const std::string& id);
-    User* getUserByPhone(const std::string& phone);
+    Wallet *getWalletById(const std::string &id);
+    User *getUserByPhone(const std::string &phone);
 
     // ✅ Thêm các hàm đồng bộ
-    bool syncWallet(const std::string& walletId);
-    bool syncUser(const User& updatedUser);
+    bool syncWallet(const std::string &walletId);
+    bool syncUser(const User &updatedUser);
     void syncAll();
 }
 

@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "../models/User.h"
-#include "../include/UserFileHelper.h"
+#include "../utils/UserFileHelper.h"
 #include "../lib/nlohmann/json.hpp"
-#include "../../include/security/hash.h"
-#include "../include/DataStore.h"
+#include "../../utils/hash.h"
+#include "../../data/DataStore.h"
 #include "../../utils/console.h"
 
 using namespace std;
