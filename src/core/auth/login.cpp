@@ -6,7 +6,6 @@
 #include "../../utils/hash.h"
 #include "../../data/DataStore.h"
 #include "../../utils/console.h"
-
 using namespace std;
 using json = nlohmann::json;
 
