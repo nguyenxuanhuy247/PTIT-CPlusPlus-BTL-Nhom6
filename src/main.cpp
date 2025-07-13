@@ -1,7 +1,7 @@
 #include "./models/User.h"
 #include "./utils/console.h"
 #include "./core/auth/login.h"
-
+#include "core/auth/register.h"
 using namespace std;
 
 int main()
@@ -39,6 +39,8 @@ int main()
 					pause();
 				break;
 			case 2: // Đăng ký
+			registerNewUser();
+			pause();
 				break;
 			case 3:
 				break;
