@@ -2,12 +2,16 @@
 #include "./utils/console.h"
 #include "./core/auth/login.h"
 #include "core/auth/register.h"
+#include "../data/seedData.h"
+
 using namespace std;
 
 int main()
 {
+
 	int choice = -1;
 	User user;
+
 	do
 	{
 		if (user.getRole() == UserRole::Failed)
@@ -43,12 +47,14 @@ int main()
 					pause();
 				break;
 			case 3:
+				insertSeedData();
+				pause();
 				break;
 			case 0:
-				print("Goodbye!", true);
+				print("Tam biet!", true);
 				break;
 			default:
-				print("Wrong choice.", true);
+				print("Vui long chon lai", true);
 				break;
 			}
 		}
