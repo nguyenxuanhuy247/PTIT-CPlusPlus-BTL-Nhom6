@@ -17,8 +17,6 @@ int main()
 		if (user.getRole() == UserRole::Failed)
 		{
 			printTitle("CHAO MUNG BAN DEN VOI HE THONG VI DIEM THUONG:");
-
-			print("Moi ban lua chon :", true);
 			print("1. Dang ky", true);
 			print("2. Dang nhap", true);
 			print("3. Khoi tao du lieu mau", true);

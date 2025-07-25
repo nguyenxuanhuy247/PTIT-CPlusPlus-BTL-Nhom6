@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
+#include <chrono>
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -93,19 +94,24 @@ std::string UserFileHelper::getCurrentDate()
 
 std::string UserFileHelper::getCurrentDateTime()
 {
-    time_t now = time(nullptr);
-    tm *t;
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
 
+    std::tm *t;
 #ifdef _WIN32
-    tm timeInfo;
-    localtime_s(&timeInfo, &now);
+    std::tm timeInfo;
+    localtime_s(&timeInfo, &in_time_t);
     t = &timeInfo;
 #else
-    t = localtime(&now);
+    t = localtime(&in_time_t);
 #endif
 
-    char buffer[20];
-    strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", t);
+    char buffer[24];
+    std::snprintf(buffer, sizeof(buffer), "%04d%02d%02d%02d%02d%02d%03lld",
+                  t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
+                  t->tm_hour, t->tm_min, t->tm_sec, static_cast<long long>(ms.count()));
+
     return std::string(buffer);
 }
 
