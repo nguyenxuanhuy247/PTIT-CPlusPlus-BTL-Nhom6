@@ -3,7 +3,8 @@
 #include "./core/auth/login.h"
 #include "core/auth/register.h"
 #include "../data/seedData.h"
-
+#include "./core/menu/manager_menu.h"
+#include "./core/menu/user_menu.h"
 using namespace std;
 
 int main()
@@ -58,6 +59,17 @@ int main()
 		}
 		else
 		{
+			// Đăng nhập thành công
+			DataStore::loadAllData();
+			if (user.getRole() == UserRole::Manager)
+			{
+				showManagerMenu(user);
+			}
+			else
+			{
+				showUserMenu(user);
+			}
+			user.setRole(UserRole::Failed); // Đăng xuất sau khi thoát menu
 		}
 	} while (choice != 0);
 
