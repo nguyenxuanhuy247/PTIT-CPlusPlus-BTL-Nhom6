@@ -1,6 +1,6 @@
 #ifndef SEEDDATA_H
 #define SEEDDATA_H
 
-void insertSeedData();
+void initSampleData();
 
 #endif // SEEDDATA_H

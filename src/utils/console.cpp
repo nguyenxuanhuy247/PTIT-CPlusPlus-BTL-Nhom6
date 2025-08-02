@@ -8,36 +8,36 @@ using namespace std;
 // Phần định nghĩa màu sắc cho từng hệ điều hành
 #ifdef _WIN32
 // Thiết lập màu chữ trên Windows
-void setColor(ConsoleColor color)
+void setColor(ColorEnum color)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);           // Lấy handle của console
     SetConsoleTextAttribute(hConsole, static_cast<WORD>(color)); // Áp dụng màu
 }
 #else
 // Thiết lập màu chữ trên macOS/Linux dùng ANSI escape codes
-void setColor(ConsoleColor color)
+void setColor(ColorEnum color)
 {
     switch (color)
     {
-    case ConsoleColor::Red:
+    case ColorEnum::Red:
         cout << "\033[1;31m"; // Màu đỏ đậm
         break;
-    case ConsoleColor::Green:
+    case ColorEnum::Green:
         cout << "\033[1;32m"; // Màu xanh lá đậm
         break;
-    case ConsoleColor::Yellow:
+    case ColorEnum::Yellow:
         cout << "\033[1;33m"; // Màu vàng đậm
         break;
-    case ConsoleColor::Blue:
+    case ColorEnum::Blue:
         cout << "\033[1;34m"; // Màu xanh dương đậm
         break;
-    case ConsoleColor::Cyan:
+    case ColorEnum::Cyan:
         cout << "\033[1;36m"; // Màu cyan đậm
         break;
-    case ConsoleColor::Magenta:
+    case ColorEnum::Magenta:
         cout << "\033[1;35m"; // Màu magenta đậm
         break;
-    case ConsoleColor::White:
+    case ColorEnum::White:
         cout << "\033[1;37m"; // Màu trắng đậm
         break;
     default:               // Màu mặc định
@@ -50,11 +50,11 @@ void setColor(ConsoleColor color)
 // Reset màu về mặc định
 void resetColor()
 {
-    setColor(ConsoleColor::Default);
+    setColor(ColorEnum::Default);
 }
 
 // In thông báo ra console với màu sắc
-void print(const string &message, bool addNewLine, ConsoleColor color)
+void print(const string &message, bool addNewLine, ColorEnum color)
 {
     setColor(color); // Thiết lập màu
     cout << message; // In nội dung
@@ -66,15 +66,15 @@ void print(const string &message, bool addNewLine, ConsoleColor color)
 }
 
 // In tiêu đề với định dạng đặc biệt
-void printTitle(const string &text, ConsoleColor color)
+void printTitle(const string &text, ColorEnum color)
 {
     setColor(color);
-    cout << "\n=== " << text << " ===\n"; // Thêm dấu === xung quanh tiêu đề
+    cout << "\n===> " << text << " <===\n";
     resetColor();
 }
 
 // Nhập dữ liệu từ người dùng với prompt có màu
-string input(const string &prompt, ConsoleColor color)
+string input(const string &prompt, ColorEnum color)
 {
     string value;
     setColor(color);
@@ -94,7 +94,7 @@ string input(const string &prompt, ConsoleColor color)
 }
 
 // Tạm dừng chương trình chờ nhấn Enter
-void pause(ConsoleColor color)
+void pause(ColorEnum color)
 {
     setColor(color);
     cout << "Press Enter to continue...";

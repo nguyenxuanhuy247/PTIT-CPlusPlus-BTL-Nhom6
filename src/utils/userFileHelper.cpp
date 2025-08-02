@@ -27,7 +27,8 @@ bool UserFileHelper::writeStringToFile(const std::string &fileName, const std::s
     }
     else
     {
-        std::cerr << "Khong the mo file de ghi: " << path << "\n";
+        /* @explain : Không thể mở file ghi đè, không in ra câu thông báo này */
+        // std::cerr << "Khong the mo file de ghi: " << path << "\n";
         return false;
     }
 }
@@ -45,7 +46,8 @@ std::string UserFileHelper::readStringFromFile(const std::string &fileName, File
     }
     else
     {
-        std::cerr << "Khong the mo file de doc: " << path << "\n";
+        /* @explain : Không thể mở file ghi đè, không in ra câu thông báo này */
+        // std::cerr << "Khong the mo file de doc: " << path << "\n";
         return "";
     }
 }

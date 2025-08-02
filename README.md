@@ -28,6 +28,7 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 ## CÁC CHỨC NĂNG CHÍNH
 
 ### 1. Đăng ký tài khoản
+
 Hệ thống hỗ trợ người dùng tự đăng ký tài khoản hoặc cho phép tài khoản quản lý tạo hộ tài khoản cho nhân viên, đối tác.
 Khi đăng ký, hệ thống tự động kiểm tra để tránh trùng lặp tên đăng nhập (username) hoặc số điện thoại (phone number), đảm bảo mỗi tài khoản là duy nhất.
 Nếu người được sinh mật khẩu tự động
@@ -44,6 +45,17 @@ Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, 
 ### 3. Quản lý ví điểm thưởng và giao dịch
 
 ### 4. Phân chia người dùng và chức năng
+
+---
+
+## LUỒNG NGHIỆP VỤ
+
+-   Khi chạy chương trình, giao diện dòng lệnh sẽ xuất hiện với 3 lựa chọn:
+    -   1. Đăng nhập
+    -   2. Đăng ký
+    -   3. Thoát
+
+*
 
 ---
 

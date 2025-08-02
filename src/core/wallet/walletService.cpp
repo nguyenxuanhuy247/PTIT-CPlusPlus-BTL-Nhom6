@@ -163,7 +163,7 @@ void showTransactionHistory(User &user)
     {
         if (tx.getFromWalletId() == walletId || tx.getToWalletId() == walletId)
         {
-            print(tx.toString(), true, ConsoleColor::Blue);
+            print(tx.toString(), true, ColorEnum::Blue);
             found = true;
         }
     }

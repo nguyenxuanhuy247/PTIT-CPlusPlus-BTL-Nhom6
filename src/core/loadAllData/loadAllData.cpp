@@ -1,15 +1,19 @@
 
 #include "../models/User.h"
-#include "../menu/manager_menu.h"
+#include "../menu/admin_menu.h"
 #include "../menu/user_menu.h"
 #include "../data/DataStore.h"
 
-void handleLoggedInUser(User& user) {
+void handleLoggedInUser(User &user)
+{
     DataStore::loadAllData();
-    
-    if (user.getRole() == UserRole::Manager) {
+
+    if (user.getRole() == UserRole::Manager)
+    {
         showManagerMenu(user);
-    } else {
+    }
+    else
+    {
         showUserMenu(user);
     }
 

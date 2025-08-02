@@ -2,39 +2,39 @@
 #include "./utils/console.h"
 #include "./core/auth/login.h"
 #include "core/auth/register.h"
-#include "../data/seedData.h"
-#include "./core/menu/manager_menu.h"
+#include "./data/sampleData.h"
+#include "./data/dataStore.h"
+#include "./core/menu/admin_menu.h"
 #include "./core/menu/user_menu.h"
+
 using namespace std;
 
 int main()
 {
+	// Cấu hình để hiển thị Tiếng Việt
+	SetConsoleOutputCP(65001);
+	// Reset màu hệ thống khi nhấn Ctrl + Z để thoát chương trình
+	atexit(resetColor);
 
-	int choice = -1;
+	initSampleData();
+
+	int yourChoice = -1;
 	User user;
 
 	do
 	{
 		if (user.getRole() == UserRole::Failed)
 		{
-			printTitle("CHAO MUNG BAN DEN VOI HE THONG VI DIEM THUONG:");
-			print("1. Dang ky", true);
-			print("2. Dang nhap", true);
-			print("3. Khoi tao du lieu mau", true);
-			print("0. Quay lai", true);
+			printTitle("CHÀO MỪNG ĐẾN VỚI HỆ THỐNG VÍ ĐIỂM THƯỞNG");
+			print("1. Đăng ký", true);
+			print("2. Đăng nhập", true);
+			print("0. Thoát", true);
 
-			string choiceStr = input("Lua chon cua ban la: ");
-			try
-			{
-				choice = stoi(choiceStr);
-			}
-			catch (...)
-			{
-				print("Vui long chon dung so!", true);
-				continue;
-			}
+			print("Vui lòng nhập lựa chọn của bạn : ", false);
+			cin >> yourChoice;
+			cin.ignore();
 
-			switch (choice)
+			switch (yourChoice)
 			{
 			case 1: // Đăng ký
 				registerNewUser();
@@ -42,18 +42,13 @@ int main()
 				break;
 			case 2: // Đăng nhập
 				user = handleLogin();
-				if (user.getRole() == UserRole::Failed)
-					pause();
-				break;
-			case 3:
-				insertSeedData();
-				pause();
 				break;
 			case 0:
-				print("Tam biet!", true);
+				print("Tạm biệt!", true);
 				break;
 			default:
-				print("Vui long chon lai", true);
+				cout << endl;
+				print("Lựa chọn không hợp lệ. Vui lòng kiểm tra lại.", true, ColorEnum::Red);
 				break;
 			}
 		}
@@ -70,8 +65,9 @@ int main()
 				showUserMenu(user);
 			}
 			user.setRole(UserRole::Failed); // Đăng xuất sau khi thoát menu
+			resetColor();
 		}
-	} while (choice != 0);
+	} while (yourChoice != 0);
 
 	return 0;
 }

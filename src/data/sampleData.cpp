@@ -11,7 +11,7 @@
 
 using namespace DataStore;
 
-void insertSeedData()
+void initSampleData()
 {
     // === Admin không có ví ===
     std::string username1 = "admin";
@@ -53,15 +53,18 @@ void insertSeedData()
     // === Thông báo kết quả ===
     if (ok1 && ok2 && ok3 && ok4 && ok5 && ok6)
     {
-        print("==> Khoi tao du lieu mau thanh cong!", true);
-        print("Quan tri vien: " + username1 + " | Pass: 123456 | Role: Admin (khong co vi)", true);
-        print("Nguoi dung 1: " + username2 + " | Pass: 123456 | Diem: " + std::to_string(w2->getPoints()), true);
-        print("Nguoi dung 2: " + username3 + " | Pass: 123456 | Diem: " + std::to_string(w3->getPoints()), true);
-        print("Vi tong: " + SYSTEM_WALLET_ID + " | Diem con lai: " + std::to_string(sys->getPoints()), true);
+        print("Khởi tạo dữ liệu thành công!", false, ColorEnum::Green);
+        printTitle("DỮ LIỆU MẪU");
+        print("Quản trị viên (admin): " + username1 + " | Pass: 123456 | Role: Admin (khong co vi)", true);
+        print("Người dùng 1 (user1):", true);
+        print("Tài khoản: " + username2 + " | Mật khẩu: 123456 | Điểm: " + std::to_string(w2->getPoints()), true);
+        print("Người dùng 2 (user2):", true);
+        print("Tài khoản: " + username3 + " | Mật khẩu: 123456 | Điểm: " + std::to_string(w3->getPoints()), true);
+        print("Ví tổng: " + SYSTEM_WALLET_ID + " | Điểm còn lại: " + std::to_string(sys->getPoints()), true);
     }
     else
     {
-        std::cerr << "\n\n==> Khoi tao du lieu mau that bai.\n";
+        print("Khởi tạo dữ liệu thiết bại.\n", true, ColorEnum::Red);
     }
 
     if (sys && w2 && w3)
