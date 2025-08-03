@@ -49,6 +49,9 @@ void setConsoleColor(ColorEnum color);
  */
 void print(const std::string &message, bool addNewLine = true, ColorEnum color = ColorEnum::Default);
 
+// Hàm trim khoảng trắng đầu và cuối
+std::string trim(const std::string &s);
+
 /**
  * Nhập dữ liệu từ người dùng với prompt có màu
  * @param prompt: Thông báo nhắc nhập
@@ -74,6 +77,6 @@ void pause(ColorEnum color = ColorEnum::Yellow);
  * Tạo chuỗi ngẫu nhiên gồm 4 chữ số
  * @return Chuỗi 4 chữ số ngẫu nhiên (từ 1000 đến 9999)
  */
-std::string random4Digits();
+std::string generateRandomPassword();
 
 #endif

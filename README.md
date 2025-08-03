@@ -53,11 +53,9 @@ Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, 
 -   Khi chạy chương trình, giao diện dòng lệnh sẽ xuất hiện với 3 lựa chọn:
     -   1. Đăng nhập
     -   2. Đăng ký
-    -   3. Thoát
+    -   0. Thoát
 
-*
-
----
+*   ---
 
 ## HƯỚNG DẪN CÀI ĐẶT
 

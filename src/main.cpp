@@ -38,7 +38,6 @@ int main()
 			{
 			case 1: // Đăng ký
 				registerNewUser();
-				pause();
 				break;
 			case 2: // Đăng nhập
 				user = handleLogin();

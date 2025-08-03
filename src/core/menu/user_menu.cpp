@@ -13,12 +13,12 @@ void showUserMenu(User &currentUser)
 
     do
     {
-        print("\n===== USER MENU =====", true);
+        printTitle("USER MENU");
         print("1. Xem thong tin ca nhan", true);
         print("2. Thay doi ten hien thi", true);
         print("3. Thay doi mat khau", true);
         print("4. Vi diem", true);
-        print("0. Dang xuat", true);
+        print("0. Đăng xuất", true);
 
         std::string choiceStr = input("Lua chon: ");
         try
@@ -34,7 +34,7 @@ void showUserMenu(User &currentUser)
         switch (choice)
         {
         case 1:
-            print("\n=== THONG TIN CA NHAN ===", true);
+            printTitle("THÔNG TIN CÁ NHÂN");
             print("Ten dang nhap: " + currentUser.getUsername(), true);
             print("Ten hien thi: " + currentUser.getDisplayName(), true);
             break;
@@ -51,12 +51,12 @@ void showUserMenu(User &currentUser)
             std::string newPass = input("Nhap mat khau moi: ");
             if (!OtpManager::confirmOtpForAction(currentUser.getPhoneNumber()))
             {
-                print("Xac thuc OTP that bai.", true, ColorEnum::Red);
+                print("Xác thực OTP thất bại.", true, ColorEnum::Red);
                 break;
             }
             currentUser.setPassword(newPass);
             DataStore::syncUser(currentUser); //  dong bo user sau doi mat khau
-            print("Da cap nhat mat khau!", true, ColorEnum::Green);
+            print("Cập nhật mật khẩu thành công.", true, ColorEnum::Green);
             break;
         }
         case 4:

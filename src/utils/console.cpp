@@ -73,6 +73,17 @@ void printTitle(const string &text, ColorEnum color)
     resetColor();
 }
 
+// Hàm trim khoảng trắng đầu và cuối
+string trim(const string &s)
+{
+    size_t start = s.find_first_not_of(" \t\n\r\f\v");
+    size_t end = s.find_last_not_of(" \t\n\r\f\v");
+
+    if (start == string::npos)
+        return ""; // toàn khoảng trắng
+    return s.substr(start, end - start + 1);
+}
+
 // Nhập dữ liệu từ người dùng với prompt có màu
 string input(const string &prompt, ColorEnum color)
 {
@@ -85,6 +96,7 @@ string input(const string &prompt, ColorEnum color)
     getline(cin, value); // Đọc dòng đầu tiên
 
     // Nếu dòng đầu rỗng (do trước đó có dùng cin >>)
+    value = trim(value);
     if (value.empty())
     {
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bỏ qua ký tự thừa
@@ -102,10 +114,10 @@ void pause(ColorEnum color)
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Đợi đến khi nhấn Enter
 }
 
-// Tạo chuỗi ngẫu nhiên 4 chữ số
-string random4Digits()
+// Sinh ngẫu nhiên 1 số có 6 chữ số
+string generateRandomPassword()
 {
     srand(static_cast<unsigned int>(time(nullptr))); // Khởi tạo seed ngẫu nhiên
-    const int num = rand() % 9000 + 1000;            // Số ngẫu nhiên từ 1000 đến 9999
+    const int num = rand() % 900000 + 100000;        // Số ngẫu nhiên từ 1000 đến 9999
     return to_string(num);                           // Chuyển thành chuỗi
 }

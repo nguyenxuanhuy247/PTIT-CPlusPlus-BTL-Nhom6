@@ -24,7 +24,7 @@ namespace OtpManager
 
     std::string generateOtp(const std::string &phone)
     {
-        std::string otp = random4Digits();
+        std::string otp = generateRandomPassword();
         otpStorage[phone] = {otp, std::time(nullptr)};
         return otp;
     }

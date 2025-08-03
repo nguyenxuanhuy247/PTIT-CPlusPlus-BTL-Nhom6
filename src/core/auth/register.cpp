@@ -38,19 +38,21 @@ void registerNewUser(bool calledByAdmin)
     std::string username;
     std::string phone;
     std::string rawPassword;
-    bool isAutoPass;
+    bool isAutoPass = false;
+
+    printTitle("ĐĂNG KÝ");
 
     do
     {
-        username = input("Tao ten dang nhap: ");
+        username = input("Tài khoản: ");
         if (username.empty())
         {
-            print("Username khong duoc de trong.", true);
+            print("Tên tài khoản không được để trống.", true, ColorEnum::Yellow);
             continue;
         }
         if (usernameExists(username))
         {
-            print("Username da ton tai. Hay nhap lai.", true);
+            print("Tên tài khoản đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Yellow);
         }
         else
             break;
@@ -58,15 +60,15 @@ void registerNewUser(bool calledByAdmin)
 
     do
     {
-        phone = input("Nhap so dien thoai: ");
+        phone = input("Số điện thoại: ");
         if (phone.empty())
         {
-            print("So dien thoai khong duoc de trong.", true);
+            print("Số điện thoại không được để trống.", true, ColorEnum::Yellow);
             continue;
         }
         if (phoneExists(phone))
         {
-            print("So dien thoai da ton tai. Hay nhap lai.", true);
+            print("Số điện thoại đã tồn tại. Vui lòng nhập lại.", true);
         }
         else
             break;
@@ -74,12 +76,23 @@ void registerNewUser(bool calledByAdmin)
 
     if (!calledByAdmin)
     {
-        rawPassword = input("Nhap mat khau (hoac de trong): ");
+
+        do
+        {
+            rawPassword = input("Mật khẩu: ");
+            if (rawPassword.empty())
+            {
+                print("Mật khẩu không được để trống.", true, ColorEnum::Yellow);
+                continue;
+            }
+            else
+                break;
+        } while (true);
     }
 
     if (rawPassword.empty())
     {
-        rawPassword = random4Digits();
+        rawPassword = generateRandomPassword();
         isAutoPass = true;
     }
 
@@ -101,10 +114,9 @@ void registerNewUser(bool calledByAdmin)
         if (calledByAdmin)
         {
             // bạn có thể log lại người tạo là admin nếu cần
-            print("Tai khoan nay duoc tao boi quan ly.", true);
+            print("Mật khẩu của tài khoản " + username + " là: " + rawPassword, true);
         }
-        print("Dang ky thanh cong! Mat khau cua tai khoan (" + username + ") la: " + rawPassword, true);
-        print("Tro ve man hinh truoc.", true);
+        print("Đăng ký tài khoản thành công.", true, ColorEnum::Green);
     }
     else
     {

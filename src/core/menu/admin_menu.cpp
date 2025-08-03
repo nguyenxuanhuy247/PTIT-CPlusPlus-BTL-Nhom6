@@ -13,7 +13,7 @@ void showManagerMenu(User currentUser)
     int choice = -1;
     do
     {
-        print("\n===== MANAGER MENU =====", true);
+        printTitle(" MANAGER MENU");
         print("1. Thong ke so nguoi dung", true);
         print("2. Tong diem toan he thong", true);
         print("3. Tong so giao dich", true);
