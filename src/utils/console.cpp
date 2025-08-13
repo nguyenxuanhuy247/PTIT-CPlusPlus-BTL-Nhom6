@@ -69,7 +69,8 @@ void print(const string &message, bool addNewLine, ColorEnum color)
 void printTitle(const string &text, ColorEnum color)
 {
     setColor(color);
-    cout << "\n===> " << text << " <===\n";
+    cout << "\n"
+         << text << "\n";
     resetColor();
 }
 

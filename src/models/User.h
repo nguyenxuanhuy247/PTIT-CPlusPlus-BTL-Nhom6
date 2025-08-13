@@ -10,7 +10,7 @@
 // Enum đại diện cho vai trò người dùng
 enum class UserRole
 {
-    Failed, // Không hợp lệ hoặc chưa đăng nhập
+    Guest,  // Không hợp lệ hoặc chưa đăng nhập
     User,   // Người dùng bình thường
     Manager // Người quản lý
 };
@@ -28,9 +28,14 @@ private:
     bool isAutoPassword;     // Mật khẩu tạo tự động hay không
 
 public:
+    // Constructor mặc định (không có tham số)
+    User() : username(""), displayName(""), password(""),
+             role(UserRole::Guest), walletId(""), phoneNumber(""), isAutoPassword(false) {}
+
     // Constructor đầy đủ với tham số mặc định
-    User(const std::string &username, const std::string &password,
-         UserRole role = UserRole::Failed,
+    User(const std::string &username,
+         const std::string &password,
+         UserRole role = UserRole::Guest,
          const std::string &displayName = "",
          const std::string &walletId = "",
          const std::string &phoneNumber = "",
@@ -38,32 +43,86 @@ public:
         : username(username), displayName(displayName), password(password),
           role(role), walletId(walletId), phoneNumber(phoneNumber), isAutoPassword(isAutoPassword) {}
 
-    // Constructor mặc định (không có tham số)
-    User() : username(""), displayName(""), password(""),
-             role(UserRole::Failed), walletId(""), phoneNumber(""), isAutoPassword(false) {}
-
     // -------- Getter: Trả về giá trị các thuộc tính --------
-    std::string getUsername() const { return username; }       // Lấy username
-    std::string getDisplayName() const { return displayName; } // Lấy displayName
-    std::string getPassword() const { return password; }       // Lấy password
-    UserRole getRole() const { return role; }                  // Lấy vai trò
-    std::string getWalletId() const { return walletId; }       // Lấy mã ví
-    std::string getPhoneNumber() const { return phoneNumber; } // Lấy số điện thoại
-    bool getIsAutoPassword() const { return isAutoPassword; }  // Kiểm tra có phải mật khẩu tự động không
+    // const ở cuối chỉ để đảm bảo rằng hàm này không sửa đổi thuộc tính nào của User
+    std::string getUsername() const
+    {
+        return username;
+    }
+
+    std::string getDisplayName() const
+    {
+        return displayName;
+    }
+
+    std::string getPassword() const
+    {
+        return password;
+    }
+
+    UserRole getRole() const
+    {
+        return role;
+    }
+
+    std::string getWalletId() const
+    {
+        return walletId;
+    }
+
+    std::string getPhoneNumber() const
+    {
+        return phoneNumber;
+    }
+
+    bool getIsAutoPassword() const
+    {
+        return isAutoPassword;
+    }
 
     // -------- Setter: Gán giá trị cho các thuộc tính --------
-    void setUsername(const std::string &newUsername) { username = newUsername; }                              // Gán username
-    void setDisplayName(const std::string &newDisplayName) { displayName = newDisplayName; }                  // Gán displayName
-    void setPassword(const std::string &newPassword) { password = PasswordUtils::hashPassword(newPassword); } // Gán password đã mã hóa
-    void setRole(UserRole newRole) { role = newRole; }                                                        // Gán vai trò
-    void setWalletId(const std::string &newWalletId) { walletId = newWalletId; }                              // Gán mã ví
-    void setPhoneNumber(const std::string &newPhone) { phoneNumber = newPhone; }                              // Gán số điện thoại
-    void setIsAutoPassword(bool value) { isAutoPassword = value; }                                            // Gán trạng thái mật khẩu tự động
+    void setUsername(const std::string &newUsername)
+    {
+        username = newUsername;
+    }
+    void setDisplayName(const std::string &newDisplayName)
+    {
+        displayName = newDisplayName;
+    }
+    void setPassword(const std::string &newPassword)
+    {
+        password = PasswordUtils::hashPassword(newPassword);
+    }
+    void setRole(UserRole newRole)
+    {
+        role = newRole;
+    }
+    void setWalletId(const std::string &newWalletId)
+    {
+        walletId = newWalletId;
+    }
+    void setPhoneNumber(const std::string &newPhone)
+    {
+        phoneNumber = newPhone;
+    }
+    void setIsAutoPassword(bool value)
+    {
+        isAutoPassword = value;
+    }
 
     // -------- Kiểm tra vai trò người dùng --------
-    bool isManager() const { return role == UserRole::Manager; } // Có phải manager không
-    bool isUser() const { return role == UserRole::User; }       // Có phải user không
-    bool isFailed() const { return role == UserRole::Failed; }   // Có phải failed không
+    bool isManager() const
+    {
+        return role == UserRole::Manager;
+    }
+    bool isUser() const
+    {
+        return role == UserRole::User;
+    }
+    bool isGuest() const
+    {
+        return role == UserRole::Guest;
+    }
 };
 
-#endif // USER_H            // Kết thúc chặn include nhiều lần
+#endif // USER_H - Kết thúc chặn include nhiều lần

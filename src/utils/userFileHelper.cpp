@@ -140,19 +140,27 @@ void UserFileHelper::backupOldFileIfExists(const std::string &path)
 
 bool UserFileHelper::saveNewUser(const User &user)
 {
-    json j;
+    json j; // Khởi tạo đối tượng JSON để chứa dữ liệu người dùng
+
+    // Ghi các thuộc tính của User vào JSON
     j["username"] = user.getUsername();
     j["password"] = user.getPassword();
     j["displayName"] = user.getDisplayName();
     j["walletId"] = user.getWalletId();
     j["phoneNumber"] = user.getPhoneNumber();
-    j["role"] = static_cast<int>(user.getRole());
+    j["role"] = static_cast<int>(user.getRole()); // Ép kiểu enum Role sang int
     j["isAutoPassword"] = user.getIsAutoPassword();
 
+    // Tạo tên file dựa trên username, định dạng .json
     std::string fileName = user.getUsername() + ".json";
+
+    // Xây dựng đường dẫn đầy đủ cho file, nằm trong thư mục User
     std::string path = buildPath(fileName, FileCategory::User);
+
+    // Nếu file cũ tồn tại, backup lại trước khi ghi file mới
     backupOldFileIfExists(path);
 
+    // Ghi JSON vào file (định dạng đẹp với 4 dấu cách thụt dòng)
     return writeStringToFile(fileName, j.dump(4), FileCategory::User);
 }
 

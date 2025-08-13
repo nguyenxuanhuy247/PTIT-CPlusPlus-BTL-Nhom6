@@ -23,7 +23,7 @@ int main()
 
 	do
 	{
-		if (user.getRole() == UserRole::Failed)
+		if (user.getRole() == UserRole::Guest)
 		{
 			printTitle("CHÀO MỪNG ĐẾN VỚI HỆ THỐNG VÍ ĐIỂM THƯỞNG");
 			print("1. Đăng ký", true);
@@ -43,7 +43,7 @@ int main()
 				user = handleLogin();
 				break;
 			case 0:
-				print("Tạm biệt!", true);
+				print("Bạn đã thoát khỏi hệ thống. Tạm biệt.", true);
 				break;
 			default:
 				cout << endl;
@@ -63,7 +63,7 @@ int main()
 			{
 				showUserMenu(user);
 			}
-			user.setRole(UserRole::Failed); // Đăng xuất sau khi thoát menu
+			user.setRole(UserRole::Guest); // Đăng xuất sau khi thoát menu
 			resetColor();
 		}
 	} while (yourChoice != 0);

@@ -18,5 +18,5 @@ void handleLoggedInUser(User &user)
     }
 
     // Tu dong dang xuat sau khi xong menu
-    user.setRole(UserRole::Failed);
+    user.setRole(UserRole::Guest);
 }

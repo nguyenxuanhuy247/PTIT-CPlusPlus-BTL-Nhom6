@@ -31,7 +31,7 @@ User handleLogin()
             if (choice == "0")
             {
                 print("Quay lại trang trước.", true);
-                return User(username, "", UserRole::Failed, username);
+                return User(username, "", UserRole::Guest, username);
             }
 
             // Nếu chọn 1 thì vòng lặp tiếp tục cho nhập lại username
@@ -86,7 +86,7 @@ User handleLogin()
                     if (choice == "0")
                     {
                         print("Quay lại trang trước.", true);
-                        return User(username, "", UserRole::Failed, username);
+                        return User(username, "", UserRole::Guest, username);
                     }
                     // Nếu chọn 1 thì vòng lặp sẽ tiếp tục
                 }
@@ -95,7 +95,7 @@ User handleLogin()
         catch (...)
         {
             print("Hệ thống bị lỗi, vui lòng thử lại sau.", true, ColorEnum::Red);
-            return User(username, "", UserRole::Failed, username);
+            return User(username, "", UserRole::Guest, username);
         }
     }
 }

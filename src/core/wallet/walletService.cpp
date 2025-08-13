@@ -19,8 +19,8 @@ void showWalletMenu(User &user)
     Wallet *wallet = getWalletById(user.getWalletId());
     if (wallet)
     {
-        print("\n===== VI DIEM =====", true);
-        print("So du hien tai: " + std::to_string(wallet->getPoints()) + " diem", true);
+        printTitle("VÍ ĐIỂM");
+        print("Số dư: " + std::to_string(wallet->getPoints()) + " diem", true);
     }
     else
     {
@@ -31,11 +31,13 @@ void showWalletMenu(User &user)
     int choice = -1;
     do
     {
-        print("\n1. Chuyen diem", true);
-        print("2. Xem lich su giao dich", true);
-        print("0. Quay lai", true);
+        print("\n", true);
+        print("1. Chuyển điểm", true);
+        print("2. Lịch sử giao dịch", true);
+        print("0. Quay lại", true);
+        print("\n", true);
 
-        std::string choiceStr = input("Lua chon: ");
+        std::string choiceStr = input("Vui lòng nhập lựa chọn: ");
         try
         {
             choice = std::stoi(choiceStr);

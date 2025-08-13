@@ -14,10 +14,11 @@ void showUserMenu(User &currentUser)
     do
     {
         printTitle("USER MENU");
-        print("1. Xem thong tin ca nhan", true);
-        print("2. Thay doi ten hien thi", true);
-        print("3. Thay doi mat khau", true);
-        print("4. Vi diem", true);
+        print("Xin chào " + currentUser.getDisplayName() + "!", true);
+        print("1. Xem thông tin cá nhân", true);
+        print("2. Thay đổi tên hiển thị", true);
+        print("3. Đổi mật khẩu", true);
+        print("4. Ví điểm", true);
         print("0. Đăng xuất", true);
 
         std::string choiceStr = input("Lua chon: ");
