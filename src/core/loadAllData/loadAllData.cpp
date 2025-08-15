@@ -17,6 +17,6 @@ void handleLoggedInUser(User &user)
         showUserMenu(user);
     }
 
-    // Tu dong dang xuat sau khi xong menu
+    // Tự động đăng xuất sau khi xong menu
     user.setRole(UserRole::Guest);
 }
