@@ -3,5 +3,4 @@
 
 void initSampleData();
 
-
 #endif // SEEDDATA_H

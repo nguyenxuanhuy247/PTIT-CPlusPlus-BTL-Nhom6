@@ -6,7 +6,6 @@
 #include "./data/dataStore.h"
 #include "./core/menu/admin_menu.h"
 #include "./core/menu/user_menu.h"
-#include "./utils/seedData.h"
 
 using namespace std;
 
@@ -29,7 +28,6 @@ int main()
 			printTitle("CHÀO MỪNG ĐẾN VỚI HỆ THỐNG VÍ ĐIỂM THƯỞNG");
 			print("1. Đăng ký", true);
 			print("2. Đăng nhập", true);
-			print("3. Insert seed data", true);
 			print("0. Thoát", true);
 
 			print("Vui lòng nhập lựa chọn của bạn : ", false);
@@ -44,10 +42,6 @@ int main()
 			case 2: // Đăng nhập
 				user = handleLogin();
 				break;
-			case 3:
-                insertSeedData();
-                pause();
-                break;
 			case 0:
 				print("Bạn đã thoát khỏi hệ thống. Tạm biệt.", true);
 				break;
