@@ -23,7 +23,7 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
 ### 4. Nguyễn Anh Khoa
 
--   Phục trách code phần Tải dữ liệu và danh sách menu
+    -   Phục trách code phần Tải dữ liệu và danh sách menu
 
 ## CÁC CHỨC NĂNG CHÍNH
 
@@ -46,6 +46,14 @@ Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, 
 
 ### 4. Phân chia người dùng và chức năng
 
+Khi người dùng đăng nhập bằng tài khoản của mình, chương trình phải tìm kiếm trong dữ liệu đã lưu trữ và xác định liệu thông tin đăng nhập đó có tồn tại và hợp lệ không. Nếu hợp lệ, cho phép người dùng vào hệ thống và sử dụng các chức năng tương ứng.
+Nhóm người dùng gồm: người dùng thông thường và người dùng quản lý.
+
+Người dùng thông thường: có quyền cập nhật tên, mật khẩu và chuyển điểm, xem giao dịch; không có quyền tạo tài khoản và thông kê hệ thống.
+Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống. 
+
+Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
+
 ---
 
 ## LUỒNG NGHIỆP VỤ
@@ -54,7 +62,23 @@ Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, 
     -   1. Đăng nhập
     -   2. Đăng ký
     -   0. Thoát
-
+-   Khi người dùng đăng nhập thành công.
+    -   Hệ thống tải dữ liệu mới nhất.
+    -   Kiểm tra vai trò: nếu Manager → vào menu quản lý; nếu User thường → vào menu cá nhân.
+    -   Người dùng thao tác trong menu cho đến khi chọn đăng xuất.
+    -   Khi thoát menu, hệ thống reset vai trò về Guest để bảo mật.
+-   Manager đăng nhập thành công → Hiển thị menu quản lý.
+    -   Người dùng nhập số lựa chọn.
+    -   Hệ thống xử lý: thống kê người dùng; thống kê điểm; thống kê giao dịch; tạo tài khoản; xem ví tổng.
+    -   Quay lại menu cho đến khi chọn 0 → đăng xuất.
+-   Người dùng đăng nhập thành công → Menu hiển thị liên tục cho đến khi người dùng chọn đăng xuất.
+    -   Các chức năng chính:
+        +   Xem thông tin cá nhân → chỉ hiển thị dữ liệu.
+        +   Thay đổi tên hiển thị → yêu cầu tên mới, cập nhật và lưu.
+        +   Đổi mật khẩu → Khi điều chỉnh xong, hệ thống gửi một mã OTP đến chủ tài khoản cùng thông báo các nội dung sẽ thay đổi để chủ tài khoản xác nhận thao tác cập nhật. Nếu mã OTP do chủ tài khoản nhập vào hợp lệ, hệ thống tiến hành cập nhật thông tin của người dùng.
+        +   Quản lý ví điểm → mở menu ví cá nhân.
+    -   Mọi thay đổi về thông tin cá nhân được lưu ngay bằng DataStore::syncUser.
+    -   Khi đăng xuất → lưu dữ liệu lần cuối và thoát.
 *   ---
 
 ## HƯỚNG DẪN CÀI ĐẶT
