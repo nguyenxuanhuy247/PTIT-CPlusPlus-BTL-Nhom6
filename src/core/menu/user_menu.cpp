@@ -1,4 +1,4 @@
-// user_menu.cpp - cap nhat dung DataStore::syncUser thay vi gui UserFileHelper truc tiep
+// user_menu.cpp - cập nhật dùng DataStore::syncUser thay vì gửi UserFileHelper trực tiếp 
 
 #include "../models/User.h"
 #include "../wallet/walletService.h"
@@ -43,7 +43,7 @@ void showUserMenu(User &currentUser)
         {
             std::string newName = input("Nhap ten hien thi moi: ");
             currentUser.setDisplayName(newName);
-            DataStore::syncUser(currentUser); // dong bo user sau thay doi ten
+            DataStore::syncUser(currentUser); // đồng bộ user sau khi đổi tên
             print("Da cap nhat ten hien thi!", true);
             break;
         }
@@ -56,7 +56,7 @@ void showUserMenu(User &currentUser)
                 break;
             }
             currentUser.setPassword(newPass);
-            DataStore::syncUser(currentUser); //  dong bo user sau doi mat khau
+            DataStore::syncUser(currentUser); //  đồng bộ user sau khi đổi mật khẩu
             print("Cập nhật mật khẩu thành công.", true, ColorEnum::Green);
             break;
         }
@@ -64,7 +64,7 @@ void showUserMenu(User &currentUser)
             showWalletMenu(currentUser);
             break;
         case 0:
-            DataStore::syncUser(currentUser); //  sao luu user truoc khi dang xuat
+            DataStore::syncUser(currentUser); //  sao lưu user trước khi đăng xuất
             print("Dang xuat thanh cong!", true);
             return;
         default:
