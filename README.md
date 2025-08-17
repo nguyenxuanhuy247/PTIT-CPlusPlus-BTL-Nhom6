@@ -29,16 +29,15 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
 ### 1. Đăng ký tài khoản
 
-Hệ thống hỗ trợ người dùng tự đăng ký tài khoản hoặc cho phép tài khoản quản lý tạo hộ tài khoản cho nhân viên, đối tác.
-Khi đăng ký, hệ thống tự động kiểm tra để tránh trùng lặp tên đăng nhập (username) hoặc số điện thoại (phone number), đảm bảo mỗi tài khoản là duy nhất.
-Nếu người được sinh mật khẩu tự động
-Phân biệt hai loại tài khoản:
-
-User: Người dùng thông thường, chỉ thực hiện các thao tác cá nhân.
-
-Manager: Quản lý, có thể tạo mới, chỉnh sửa, hoặc quản lý các tài khoản khác.
-Dữ liệu tài khoản được lưu trữ dưới dạng file JSON giúp dễ dàng thao tác, đồng bộ, và mở rộng.
-Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, phòng tránh mất mát thông tin.
+-   Có 2 cách đăng ký tài khoản :
+    -   Cách 1 : Người dùng tự đăng ký bằng cách cung cấp Tên tài khoản, số điện thoại, mật khẩu
+    -   Cách 2 : Người quản lý sẽ tạo tài khoản hộ người dùng và cung cấp cho người dùng Tên tài khoản và mật khẩu
+-   Khi đăng ký, hệ thống tự động kiểm tra để tránh trùng lặp tên đăng nhập (username) hoặc số điện thoại (phone number), đảm bảo mỗi tài khoản là duy nhất.
+-   Có 2 loại tài khoản :
+    -   Người dùng thường (User): Người dùng thông thường, chỉ thực hiện các thao tác cá nhân.
+    -   Người quản lý (Manager): Quản lý, có thể tạo mới, chỉnh sửa, hoặc quản lý các tài khoản khác.
+-   Dữ liệu tài khoản được lưu trữ dưới dạng file JSON giúp dễ dàng thao tác, đồng bộ, và mở rộng.
+-   Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, phòng tránh mất mát thông tin.
 
 ### 2. Đăng nhập tài khoản
 
@@ -50,7 +49,7 @@ Khi người dùng đăng nhập bằng tài khoản của mình, chương trìn
 Nhóm người dùng gồm: người dùng thông thường và người dùng quản lý.
 
 Người dùng thông thường: có quyền cập nhật tên, mật khẩu và chuyển điểm, xem giao dịch; không có quyền tạo tài khoản và thông kê hệ thống.
-Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống. 
+Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống.
 
 Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
 
@@ -73,12 +72,13 @@ Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
     -   Quay lại menu cho đến khi chọn 0 → đăng xuất.
 -   Người dùng đăng nhập thành công → Menu hiển thị liên tục cho đến khi người dùng chọn đăng xuất.
     -   Các chức năng chính:
-        +   Xem thông tin cá nhân → chỉ hiển thị dữ liệu.
-        +   Thay đổi tên hiển thị → yêu cầu tên mới, cập nhật và lưu.
-        +   Đổi mật khẩu → Khi điều chỉnh xong, hệ thống gửi một mã OTP đến chủ tài khoản cùng thông báo các nội dung sẽ thay đổi để chủ tài khoản xác nhận thao tác cập nhật. Nếu mã OTP do chủ tài khoản nhập vào hợp lệ, hệ thống tiến hành cập nhật thông tin của người dùng.
-        +   Quản lý ví điểm → mở menu ví cá nhân.
+        -   Xem thông tin cá nhân → chỉ hiển thị dữ liệu.
+        -   Thay đổi tên hiển thị → yêu cầu tên mới, cập nhật và lưu.
+        -   Đổi mật khẩu → Khi điều chỉnh xong, hệ thống gửi một mã OTP đến chủ tài khoản cùng thông báo các nội dung sẽ thay đổi để chủ tài khoản xác nhận thao tác cập nhật. Nếu mã OTP do chủ tài khoản nhập vào hợp lệ, hệ thống tiến hành cập nhật thông tin của người dùng.
+        -   Quản lý ví điểm → mở menu ví cá nhân.
     -   Mọi thay đổi về thông tin cá nhân được lưu ngay bằng DataStore::syncUser.
     -   Khi đăng xuất → lưu dữ liệu lần cuối và thoát.
+
 *   ---
 
 ## HƯỚNG DẪN CÀI ĐẶT
