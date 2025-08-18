@@ -45,12 +45,10 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
 ### 4. Phân chia người dùng và chức năng
 
-Khi người dùng đăng nhập bằng tài khoản của mình, chương trình phải tìm kiếm trong dữ liệu đã lưu trữ và xác định liệu thông tin đăng nhập đó có tồn tại và hợp lệ không. Nếu hợp lệ, cho phép người dùng vào hệ thống và sử dụng các chức năng tương ứng.
-Nhóm người dùng gồm: người dùng thông thường và người dùng quản lý.
-
-Người dùng thông thường: có quyền cập nhật tên, mật khẩu và chuyển điểm, xem giao dịch; không có quyền tạo tài khoản và thông kê hệ thống.
-Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống.
-
+-   Khi người dùng đăng nhập bằng tài khoản của mình, chương trình phải tìm kiếm trong dữ liệu đã lưu trữ và xác định liệu thông tin đăng nhập đó có tồn tại và hợp lệ không. Nếu hợp lệ, cho phép người dùng vào hệ thống và sử dụng các chức năng tương ứng.
+-   Nhóm người dùng gồm: người dùng thông thường và người dùng quản lý.
+    -   Người dùng thông thường: có quyền cập nhật tên, mật khẩu và chuyển điểm, xem giao dịch; không có quyền tạo tài khoản và thông kê hệ thống.
+    -   Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống.
 Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
 
 ---
