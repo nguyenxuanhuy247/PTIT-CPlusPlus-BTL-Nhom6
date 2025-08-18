@@ -45,7 +45,7 @@ void showSystemWalletView(User adminUser)
 {
     if (!adminUser.isManager())
     {
-        print("❌ Chi Manager moi duoc truy cap chuc nang nay!", true);
+        print("❌ Chỉ admin mới có quyền truy cập!", true);
         return;
     }
 

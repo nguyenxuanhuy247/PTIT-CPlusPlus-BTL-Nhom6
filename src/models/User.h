@@ -10,7 +10,7 @@
 // Enum đại diện cho vai trò người dùng
 enum class UserRole
 {
-    Guest,  // Không hợp lệ hoặc chưa đăng nhập
+    Guest,  // Người dùng chưa đăng nhập
     User,   // Người dùng bình thường
     Manager // Người quản lý
 };
