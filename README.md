@@ -49,6 +49,7 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 -   Nhóm người dùng gồm: người dùng thông thường và người dùng quản lý.
     -   Người dùng thông thường: có quyền cập nhật tên, mật khẩu và chuyển điểm, xem giao dịch; không có quyền tạo tài khoản và thông kê hệ thống.
     -   Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống.
+
 Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
 
 ---
