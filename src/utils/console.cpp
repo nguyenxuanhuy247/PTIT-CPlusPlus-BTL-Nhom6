@@ -92,17 +92,7 @@ string input(const string &prompt, ColorEnum color)
     setColor(color);
     cout << prompt; // Hiển thị prompt với màu
     resetColor();
-
-    // Xử lý nhập liệu đa nền tảng
-    getline(cin, value); // Đọc dòng đầu tiên
-
-    // Nếu dòng đầu rỗng (do trước đó có dùng cin >>)
-    value = trim(value);
-    if (value.empty())
-    {
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Bỏ qua ký tự thừa
-        getline(cin, value);                                 // Đọc lại
-    }
+    getline(cin, value);
     return value;
 }
 
@@ -110,7 +100,7 @@ string input(const string &prompt, ColorEnum color)
 void pause(ColorEnum color)
 {
     setColor(color);
-    cout << "Press Enter to continue...";
+    cout << "Nhấn Enter để tiếp tục...";
     resetColor();
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Đợi đến khi nhấn Enter
 }

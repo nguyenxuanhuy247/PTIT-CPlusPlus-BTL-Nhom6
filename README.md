@@ -17,13 +17,10 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
     - Phục trách code phần Đăng ký
 
-### 3. Khắc Ngọc
+### 3. Nguyễn Anh Khoa
 
+    - Phục trách code phần Tải dữ liệu và danh sách menu
     - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch
-
-### 4. Nguyễn Anh Khoa
-
-    -   Phục trách code phần Tải dữ liệu và danh sách menu
 
 ## CÁC CHỨC NĂNG CHÍNH
 

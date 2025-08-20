@@ -33,7 +33,7 @@ bool phoneExists(const std::string &phone)
     return false;
 }
 
-void registerNewUser(bool calledByAdmin)
+void registerNewUser(bool isRegisterByAdmin)
 {
     std::string username;
     std::string phone;
@@ -66,15 +66,21 @@ void registerNewUser(bool calledByAdmin)
             print("Số điện thoại không được để trống.", true, ColorEnum::Yellow);
             continue;
         }
+        // Chỉ chấp nhận số điện thoại bắt đầu bằng 0 và có độ dài 10 ký tự
+        if (phone.size() != 10 || phone[0] != '0')
+        {
+            print("Định dạng số điện thoại không đúng. Vui lòng nhập lại", true, ColorEnum::Yellow);
+            continue;
+        }
         if (phoneExists(phone))
         {
-            print("Số điện thoại đã tồn tại. Vui lòng nhập lại.", true);
+            print("Số điện thoại đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Yellow);
         }
         else
             break;
     } while (true);
 
-    if (!calledByAdmin)
+    if (!isRegisterByAdmin)
     {
 
         do
@@ -111,15 +117,15 @@ void registerNewUser(bool calledByAdmin)
         allUsers.push_back(newUser);
         allWallets[walletId] = wallet;
 
-        if (calledByAdmin)
+        print("Đăng ký tài khoản thành công.", true, ColorEnum::Green);
+        if (isRegisterByAdmin)
         {
             // bạn có thể log lại người tạo là admin nếu cần
             print("Mật khẩu của tài khoản " + username + " là: " + rawPassword, true);
         }
-        print("Đăng ký tài khoản thành công.", true, ColorEnum::Green);
     }
     else
     {
-        print("Dang ky that bai.", true);
+        print("Đăng ký tài khoản thất bai.", true, ColorEnum::Red);
     }
 }

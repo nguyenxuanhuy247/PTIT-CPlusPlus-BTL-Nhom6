@@ -52,19 +52,19 @@ void showSystemWalletView(User adminUser)
     Wallet *sysWallet = getWalletById(SYSTEM_WALLET_ID);
     if (!sysWallet)
     {
-        print("⚠️ Vi tong khong ton tai.", true);
+        print("⚠️ Ví tổng không tồn tại.", true);
         return;
     }
 
     int choice = -1;
     do
     {
-        print("\n===== MENU VI TONG =====", true);
-        print("1. Cap diem cho nguoi dung", true);
-        print("2. Xem tong so giao dich cua vi tong", true);
-        print("0. Quay lai", true);
+        printTitle("MENU VÍ TỔNG");
+        print("1. Cấp điểm cho người dùng", true);
+        print("2. Xem tổng số giao dịch trong ví", true);
+        print("0. Quay lại", true);
 
-        std::string choiceStr = input("Lua chon: ");
+        std::string choiceStr = input("Vui lòng nhập lựa chọn của bạn: ");
         try
         {
             choice = std::stoi(choiceStr);
@@ -79,7 +79,7 @@ void showSystemWalletView(User adminUser)
         {
         case 1:
         {
-            std::string targetUsername = input("Nhap username nguoi nhan: ");
+            std::string targetUsername = input("Nhập username của người nhận: ");
             const auto &users = DataStore::getAllUsers();
 
             const User *targetUser = nullptr;
@@ -94,8 +94,8 @@ void showSystemWalletView(User adminUser)
 
             if (!targetUser)
             {
-                print("Khong tim thay nguoi dung.", true);
-                input("Nhan Enter de tiep tuc..."); // Thay pause() bằng input()
+                print("Không tìm thây người dùng.", true);
+                input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
                 break;
             }
 
@@ -103,12 +103,12 @@ void showSystemWalletView(User adminUser)
             Wallet *targetWallet = getWalletById(walletId);
             if (!targetWallet)
             {
-                print("Nguoi dung chua co vi.", true);
-                input("Nhan Enter de tiep tuc..."); // Thay pause() bằng input()
+                print("Người dùng chưa có ví.", true);
+                input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
                 break;
             }
 
-            std::string amountStr = input("Nhap so diem muon cap: ");
+            std::string amountStr = input("Nhập số điểm muốn cấp: ");
             int amount = 0;
             try
             {
@@ -116,7 +116,7 @@ void showSystemWalletView(User adminUser)
             }
             catch (...)
             {
-                print("So diem khong hop le.", true);
+                print("Số điểm không hợp lệ.", true);
                 break;
             }
 

@@ -63,7 +63,8 @@ int main()
 			{
 				showUserMenu(user);
 			}
-			user.setRole(UserRole::Guest); // Đăng xuất sau khi thoát menu
+			// Đăng xuất sau khi thoát menu
+			user.setRole(UserRole::Guest);
 			resetColor();
 		}
 	} while (yourChoice != 0);

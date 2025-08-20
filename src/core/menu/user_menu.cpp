@@ -1,4 +1,4 @@
-// user_menu.cpp - cập nhật dùng DataStore::syncUser thay vì gửi UserFileHelper trực tiếp 
+// user_menu.cpp - cập nhật dùng DataStore::syncUser thay vì gửi UserFileHelper trực tiếp
 
 #include "../models/User.h"
 #include "../wallet/walletService.h"
@@ -21,14 +21,14 @@ void showUserMenu(User &currentUser)
         print("4. Ví điểm", true);
         print("0. Đăng xuất", true);
 
-        std::string choiceStr = input("Lua chon: ");
+        std::string choiceStr = input("Vui lòng nhập lựa chọn của bạn: ");
         try
         {
             choice = std::stoi(choiceStr);
         }
         catch (...)
         {
-            print("Lua chon khong hop le.", true);
+            print("Lựa chọn không hợp lệ. Vui lòng chọn lại.", true, ColorEnum::Yellow);
             continue;
         }
 
@@ -36,20 +36,20 @@ void showUserMenu(User &currentUser)
         {
         case 1:
             printTitle("THÔNG TIN CÁ NHÂN");
-            print("Ten dang nhap: " + currentUser.getUsername(), true);
-            print("Ten hien thi: " + currentUser.getDisplayName(), true);
+            print("Tài khoản: " + currentUser.getUsername(), true);
+            print("Tên hiển thị: " + currentUser.getDisplayName(), true);
             break;
         case 2:
         {
-            std::string newName = input("Nhap ten hien thi moi: ");
+            std::string newName = input("Nhập tên hiển thị mới: ");
             currentUser.setDisplayName(newName);
             DataStore::syncUser(currentUser); // đồng bộ user sau khi đổi tên
-            print("Da cap nhat ten hien thi!", true);
+            print("Cập nhật tên hiển thị mới thành công!", true, ColorEnum::Green);
             break;
         }
         case 3:
         {
-            std::string newPass = input("Nhap mat khau moi: ");
+            std::string newPass = input("Nhập mật khẩu mới: ");
             if (!OtpManager::confirmOtpForAction(currentUser.getPhoneNumber()))
             {
                 print("Xác thực OTP thất bại.", true, ColorEnum::Red);
@@ -65,10 +65,10 @@ void showUserMenu(User &currentUser)
             break;
         case 0:
             DataStore::syncUser(currentUser); //  sao lưu user trước khi đăng xuất
-            print("Dang xuat thanh cong!", true);
+            print("Đăng xuất thành công!", true, ColorEnum::Green);
             return;
         default:
-            print("Lua chon khong hop le.", true);
+            print("Lựa chọn không hợp lệ. Vui lòng chọn lại.", true, ColorEnum::Yellow);
             break;
         }
 
