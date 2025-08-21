@@ -42,11 +42,10 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
 -    Mỗi người dùng có một bộ dữ liệu về số điểm (ví-wallet) duy nhất (id tự sinh) phân biệt với các ví còn lại.
 -    Giao dịch chuyển điểm từ ví A → B bao gồm thao tác:
-
     -   Kiểm tra số dư.
     -   OTP xác thực giao dịch.
     -   Cập nhật điểm đồng thời (atomic).
-    -   Ghi log giao dịch (transaction log).
+    -   Ghi log giao dịch (transaction log).    
 -    Người dùng có thể xem lịch sử giao dịch cá nhân, lịch sử giao dịch (và trạng thái thực hiện giao dịch) .
 
 ### 4. Phân chia người dùng và chức năng
