@@ -40,6 +40,14 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
 ### 3. Quản lý ví điểm thưởng và giao dịch
 
+-    Mỗi người dùng có một bộ dữ liệu về số điểm (ví-wallet) duy nhất (id tự sinh) phân biệt với các ví còn lại.
+-    Giao dịch chuyển điểm từ ví A → B bao gồm thao tác:
+    -    Kiểm tra số dư.
+    -    OTP xác thực giao dịch.
+    -    Cập nhật điểm đồng thời (atomic).
+    -    Ghi log giao dịch (transaction log).
+-    Người dùng có thể xem lịch sử giao dịch cá nhân, lịch sử giao dịch (và trạng thái thực hiện giao dịch) .
+
 ### 4. Phân chia người dùng và chức năng
 
 -   Khi người dùng đăng nhập bằng tài khoản của mình, chương trình phải tìm kiếm trong dữ liệu đã lưu trữ và xác định liệu thông tin đăng nhập đó có tồn tại và hợp lệ không. Nếu hợp lệ, cho phép người dùng vào hệ thống và sử dụng các chức năng tương ứng.
@@ -48,6 +56,7 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
     -   Người dùng quản lý có tất cả các quyền: tạo, cập nhật tài khoản theo yêu cầu của chủ tài khoản (làm hộ) ; quản lý toàn hệ thống.
 
 Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
+
 
 ---
 
@@ -74,6 +83,32 @@ Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
         -   Quản lý ví điểm → mở menu ví cá nhân.
     -   Mọi thay đổi về thông tin cá nhân được lưu ngay bằng DataStore::syncUser.
     -   Khi đăng xuất → lưu dữ liệu lần cuối và thoát.
+-    Quản lý hoạt động của ví:
+    -    Chỉ Manager (adminUser.isManager()) mới được thao tác với ví tổng.
+    -    Manager có thể:
+        -    Cấp điểm cho một người dùng cụ thể.
+            -    Yêu cầu OTP để xác thực.
+            -    Điểm sẽ được trừ từ ví tổng và cộng vào ví user.
+            -    Giao dịch được ghi nhận.
+        -    Xem tổng số giao dịch của ví tổng.
+    -    Người dùng đăng nhập → mở showWalletMenu.
+    -    Trong menu, có 2 chức năng chính:
+        -    Chuyển điểm: Nhập số điện thoại người nhận → nhập số điểm → xác nhận giao dịch → xác thực OTP → thực hiện chuyển điểm (trừ ví mình, cộng ví người khác, ghi log).
+        -    Xem lịch sử giao dịch: Hiển thị toàn bộ các giao dịch liên quan đến ví cá nhân.
+-    Giao dịch chuyển điểm
+    -    Luồng nghiệp vụ “Chuyển điểm”
+        -    User thao tác: Nhập số điện thoại người nhận → Nhập số điểm muốn chuyển → Xác thực OTP.
+        -    Hệ thống xử lý:
+            -    Tìm User nhận từ DataStore::getAllUsers() dựa theo số điện thoại: Nếu không tìm thấy → báo lỗi “Không tìm thấy người dùng”.
+            -    Lấy Wallet của người gửi và người nhận: Nếu một trong hai ví không tồn tại → báo lỗi.
+            -    Kiểm tra số dư ví người gửi (deductPoints): Nếu không đủ điểm → báo lỗi “Ví không đủ điểm”.
+            -    Thực hiện giao dịch: deductPoints() trừ điểm ví người gửi, addPoints() cộng điểm ví người nhận.
+            -    Tạo giao dịch mới → sinh mã định danh duy nhất cảu một giao dịch, ghi nhận thời gian, loại giao dịch, ví gửi, ví nhận, số điểm.
+            -    Ghi nhận giao dịch: Cập nhật danh sách giao dịch vào ví người gửi & người nhận, đồng bộ dữ liệu ví và ghi log ra file (lưu lịch sử).
+    -    Kết quả cuối cùng:
+        -    Điểm được chuyển thành công từ ví A → ví B.
+        -    Giao dịch có mã định danh được ghi log trong file để tra cứu sau này.
+        -    In ra màn hình: "✅ Chuyển thành công X điểm cho user Y"
 
 *   ---
 
