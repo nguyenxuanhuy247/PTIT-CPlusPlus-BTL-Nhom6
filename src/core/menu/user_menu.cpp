@@ -13,7 +13,7 @@ void showUserMenu(User &currentUser)
 
     do
     {
-        printTitle("USER MENU");
+        printTitle("MENU NGƯỜI DÙNG");
         print("Xin chào " + currentUser.getDisplayName() + "!", true);
         print("1. Xem thông tin cá nhân", true);
         print("2. Thay đổi tên hiển thị", true);
@@ -35,10 +35,14 @@ void showUserMenu(User &currentUser)
         switch (choice)
         {
         case 1:
+        {
+
             printTitle("THÔNG TIN CÁ NHÂN");
             print("Tài khoản: " + currentUser.getUsername(), true);
             print("Tên hiển thị: " + currentUser.getDisplayName(), true);
+            print("Số điện thoại: " + currentUser.getPhoneNumber(), true);
             break;
+        }
         case 2:
         {
             std::string newName = input("Nhập tên hiển thị mới: ");
@@ -49,28 +53,54 @@ void showUserMenu(User &currentUser)
         }
         case 3:
         {
-            std::string newPass = input("Nhập mật khẩu mới: ");
+            std::string newPassword = input("Nhập mật khẩu mới: ");
+            int retryCount = 0;
+            bool passwordMatched = false;
+            while (retryCount < 3)
+            {
+                std::string confirmPassword = input("Xác nhận mật khẩu mới: ");
+                if (newPassword == confirmPassword)
+                {
+                    passwordMatched = true;
+                    break;
+                }
+                else
+                {
+                    print("Nhập sai mật khẩu, vui lòng nhập lại.", true, ColorEnum::Red);
+                    retryCount++;
+                }
+            }
+            if (!passwordMatched)
+            {
+                print("Nhập sai quá 3 lần. Đổi mật khẩu thất bại.", true, ColorEnum::Red);
+                break;
+            }
             if (!OtpManager::confirmOtpForAction(currentUser.getPhoneNumber()))
             {
                 print("Xác thực OTP thất bại.", true, ColorEnum::Red);
                 break;
             }
-            currentUser.setPassword(newPass);
+            currentUser.setPassword(newPassword);
             DataStore::syncUser(currentUser); //  đồng bộ user sau khi đổi mật khẩu
             print("Cập nhật mật khẩu thành công.", true, ColorEnum::Green);
             break;
         }
         case 4:
+        {
             showWalletMenu(currentUser);
             break;
+        }
         case 0:
+        {
             DataStore::syncUser(currentUser); //  sao lưu user trước khi đăng xuất
             print("Đăng xuất thành công!", true, ColorEnum::Green);
             return;
+        }
         default:
+        {
             print("Lựa chọn không hợp lệ. Vui lòng chọn lại.", true, ColorEnum::Yellow);
             break;
         }
-
+        }
     } while (true);
 }

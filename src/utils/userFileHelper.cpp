@@ -33,6 +33,9 @@ bool UserFileHelper::writeStringToFile(const std::string &fileName, const std::s
     }
 }
 
+// Hàm readStringFromFile dùng để đọc toàn bộ nội dung của một file (dạng text) vào một chuỗi std::string.
+// Tham số fileName là tên file cần đọc, category là loại file để xây dựng đường dẫn đầy đủ.
+// Nếu file mở thành công, hàm trả về nội dung file dưới dạng chuỗi. Nếu không mở được file, hàm trả về chuỗi rỗng.
 std::string UserFileHelper::readStringFromFile(const std::string &fileName, FileCategory category)
 {
     std::string path = buildPath(fileName, category);
@@ -44,14 +47,21 @@ std::string UserFileHelper::readStringFromFile(const std::string &fileName, File
         inFile.close();
         return content;
     }
-    else
-    {
-        /* @explain : Không thể mở file ghi đè, không in ra câu thông báo này */
-        // std::cerr << "Khong the mo file de doc: " << path << "\n";
-        return "";
-    }
+
+    return "";
 }
 
+/**
+ * @brief Tạo đường dẫn đầy đủ tới file dựa trên tên file và loại file.
+ *
+ * Hàm này nhận vào tên file và loại file (User, Wallet, TransactionLog),
+ * sau đó xác định thư mục cơ sở tương ứng với loại file. Nếu thư mục chưa tồn tại,
+ * hàm sẽ tự động tạo thư mục đó. Cuối cùng, hàm trả về đường dẫn đầy đủ tới file.
+ *
+ * @param fileName Tên file cần tạo đường dẫn.
+ * @param category Loại file (User, Wallet, TransactionLog).
+ * @return Đường dẫn đầy đủ tới file dưới dạng std::string.
+ */
 std::string UserFileHelper::buildPath(const std::string &fileName, FileCategory category)
 {
     std::string baseDir;
@@ -117,6 +127,21 @@ std::string UserFileHelper::getCurrentDateTime()
     return std::string(buffer);
 }
 
+/**
+ * @brief Sao lưu file cũ nếu tồn tại tại đường dẫn chỉ định.
+ *
+ * Kiểm tra xem file tại đường dẫn 'path' có tồn tại hay không.
+ * Nếu không tồn tại thì kết thúc hàm.
+ * Nếu tồn tại, thực hiện các bước sau:
+ * - Lấy ngày hiện tại (định dạng yyyy-mm-dd).
+ * - Lấy ngày giờ hiện tại (định dạng yyyy-mm-dd_HH-MM-SS).
+ * - Tạo thư mục backup theo ngày nếu chưa tồn tại.
+ * - Lấy tên file gốc và phần mở rộng.
+ * - Tạo đường dẫn file backup với tên file gốc, ngày giờ và phần mở rộng.
+ * - Sao chép file gốc sang đường dẫn backup, ghi đè nếu file backup đã tồn tại.
+ *
+ * @param path Đường dẫn tới file cần kiểm tra và sao lưu.
+ */
 void UserFileHelper::backupOldFileIfExists(const std::string &path)
 {
     if (!fs::exists(path))

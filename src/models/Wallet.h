@@ -13,6 +13,14 @@ private:
     int points;
     std::vector<std::string> transactionIds;
 
+    /**
+     * @brief Tạo một chuỗi ID duy nhất dạng số hệ thập lục phân.
+     *
+     * Hàm này sử dụng bộ sinh số ngẫu nhiên để tạo ra một chuỗi gồm 8 ký tự số hệ thập lục phân (0-9, a-f).
+     * Mỗi ký tự được sinh ngẫu nhiên, đảm bảo tính duy nhất tương đối cho ID.
+     *
+     * @return Chuỗi std::string chứa ID duy nhất vừa được tạo.
+     */
     static std::string generateUniqueId()
     {
         std::stringstream ss;

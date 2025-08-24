@@ -30,7 +30,7 @@ int main()
 			print("2. Đăng nhập", true);
 			print("0. Thoát", true);
 
-			print("Vui lòng nhập lựa chọn của bạn : ", false);
+			print("Nhập lựa chọn của bạn: ", false);
 			cin >> yourChoice;
 			cin.ignore();
 

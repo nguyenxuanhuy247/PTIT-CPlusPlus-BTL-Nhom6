@@ -10,10 +10,10 @@ using namespace DataStore;
 void showManagerMenu(User currentUser)
 {
 
-    int choice = -1;
+    int yourChoice = -1;
     do
     {
-        printTitle("MANAGER MENU");
+        printTitle("MENU QUẢN TRỊ VIÊN");
         print("1. Thống kê số lượng người dùng", true);
         print("2. Tổng điểm toàn hệ thống", true);
         print("3. Tổng số giao dịch", true);
@@ -25,14 +25,14 @@ void showManagerMenu(User currentUser)
         try
         {
             /* @explain : viết tắt của string to int, dùng để chuyển chuỗi (std::string) thành số nguyên (int) */
-            choice = std::stoi(ch);
+            yourChoice = std::stoi(ch);
         }
         catch (...)
         {
             continue;
         }
 
-        switch (choice)
+        switch (yourChoice)
         {
         case 1:
             print("Số lượng người dùng: " + std::to_string(getAllUsers().size()), true);

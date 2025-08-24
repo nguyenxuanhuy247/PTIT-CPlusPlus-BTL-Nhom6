@@ -10,13 +10,13 @@ namespace OtpManager
     bool confirmOtpForAction(const std::string &phone)
     {
         std::string otp = generateOtp(phone);
-        print("OTP da duoc gui toi so: " + phone, true);
-        print("OTP cua ban la: " + otp, true);
+        print("OTP đã được gửi tới số điện thoại: " + phone, true, ColorEnum::Green);
+        print("OTP của bạn là: " + otp + ". Vui lòng KHÔNG CHIA SẺ VỚI BẤT KỲ AI.", true);
 
-        std::string userOtp = input("Nhap ma OTP de xac nhan thao tac: ");
+        std::string userOtp = input("Nhập mã OTP để xác nhận: ");
         if (!verifyOtp(phone, userOtp))
         {
-            print("OTP khong dung hoac het han.", true);
+            print("OTP không đúng hoặc hết hạn.", true, ColorEnum::Red);
             return false;
         }
         return true;
