@@ -101,19 +101,10 @@ Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
         -    Xem lịch sử giao dịch: Hiển thị toàn bộ các giao dịch liên quan đến ví cá nhân.
 -    Giao dịch chuyển điểm
     -    Luồng nghiệp vụ “Chuyển điểm”
-        -    User thao tác: Nhập số điện thoại người nhận → Nhập số điểm muốn chuyển → Xác thực OTP.
-        -    Hệ thống xử lý:
-(1) Tìm User nhận từ DataStore::getAllUsers() dựa theo số điện thoại: Nếu không tìm thấy → báo lỗi “Không tìm thấy người dùng”.
-(2) Lấy Wallet của người gửi và người nhận: Nếu một trong hai ví không tồn tại → báo lỗi.
-(3) Kiểm tra số dư ví người gửi (deductPoints): Nếu không đủ điểm → báo lỗi “Ví không đủ điểm”.
-(4) Thực hiện giao dịch: deductPoints() trừ điểm ví người gửi, addPoints() cộng điểm ví người nhận.
-(5) Tạo giao dịch mới → sinh mã định danh duy nhất cảu một giao dịch, ghi nhận thời gian, loại giao dịch, ví gửi, ví nhận, số điểm.
-(6) Ghi nhận giao dịch: Cập nhật danh sách giao dịch vào ví người gửi & người nhận, đồng bộ dữ liệu ví và ghi log ra file (lưu lịch sử).
-    -    Kết quả cuối cùng:
-        -    Điểm được chuyển thành công từ ví A → ví B.
-        -    Giao dịch có mã định danh được ghi log trong file để tra cứu sau này.
-        -    In ra màn hình: "✅ Chuyển thành công X điểm cho user Y"
-
+        -    Người dùng vào ví → xem số dư và menu.
+        -    Chuyển điểm: nhập số điện thoại người nhận → nhập số điểm → xác nhận → OTP → xử lý giao dịch.
+        -    Giao dịch thành công: trừ/cộng điểm, ghi log, đồng bộ.    
+        -    Lịch sử giao dịch: cho phép kiểm tra lại tất cả giao dịch đã thực hiện.
 *   ---
 
 ## HƯỚNG DẪN CÀI ĐẶT
