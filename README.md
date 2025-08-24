@@ -37,6 +37,10 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 -   Hệ thống sẽ tự động sao lưu dữ liệu mỗi khi có cập nhật, phòng tránh mất mát thông tin.
 
 ### 2. Đăng nhập tài khoản
+Xác minh thông qua tài khoản + chuỗi bảo mật
+Chuỗi bảo mật được hash theo SHA-256 (triển khai trong hash.cpp)
+Với chuỗi bảo mật tự phát sinh → ép buộc đổi mới sau lần đăng nhập đầu
+Tương thích với xác thực OTP (output hiển thị terminal)
 
 ### 3. Quản lý ví điểm thưởng và giao dịch
 
