@@ -56,15 +56,15 @@ void registerNewUser(bool isRegisterByAdmin)
     bool usernameInputSuccess = false;
     do
     {
-        username = input("Tài khoản: ");
+        username = trim(input("Tài khoản: "));
         if (username.empty())
         {
-            print("Tên tài khoản không được để trống.", true, ColorEnum::Yellow);
+            print("Tên tài khoản không được để trống.", true, ColorEnum::Red);
             usernameAttempts++;
         }
         else if (usernameExists(username))
         {
-            print("Tên tài khoản đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Yellow);
+            print("Tên tài khoản đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Red);
             usernameAttempts++;
         }
         else
@@ -75,16 +75,14 @@ void registerNewUser(bool isRegisterByAdmin)
 
         if (usernameAttempts >= 3)
         {
-            print("\nNhập sai 3 lần.", true, ColorEnum::Red);
             std::string choice = "";
             do
             {
-                choice = input("Nhấn 1 để nhập lại Tài khoản, hoặc 0 để quay lại: ");
+                choice = input("Nhấn 1 để nhập lại Tài khoản, hoặc 0 để quay lại: ", ColorEnum::Yellow);
             } while (choice != "1" && choice != "0");
 
             if (choice == "0")
             {
-                print("Quay lại trang trước.", true);
                 return;
             }
             usernameAttempts = 0;
@@ -98,13 +96,13 @@ void registerNewUser(bool isRegisterByAdmin)
         phone = input("Số điện thoại: ");
         if (phone.empty())
         {
-            print("Số điện thoại không được để trống.", true, ColorEnum::Yellow);
+            print("Số điện thoại không được để trống.", true, ColorEnum::Red);
             phoneAttempts++;
         }
         // Chỉ chấp nhận số điện thoại bắt đầu bằng 0 và có độ dài 10 ký tự
         else if (phone.size() != 10 || phone[0] != '0')
         {
-            print("Định dạng số điện thoại không đúng. Vui lòng nhập lại", true, ColorEnum::Yellow);
+            print("Định dạng số điện thoại không đúng. Vui lòng nhập lại", true, ColorEnum::Red);
             phoneAttempts++;
         }
         else if (phoneExists(phone))
@@ -120,16 +118,14 @@ void registerNewUser(bool isRegisterByAdmin)
 
         if (phoneAttempts >= 3)
         {
-            print("\nNhập sai 3 lần.", true, ColorEnum::Red);
             std::string choice = "";
             do
             {
-                choice = input("Nhấn 1 để nhập lại Số điện thoại, hoặc 0 để quay lại: ");
+                choice = input("Nhấn 1 để nhập lại Tài khoản, hoặc 0 để quay lại: ", ColorEnum::Yellow);
             } while (choice != "1" && choice != "0");
 
             if (choice == "0")
             {
-                print("Quay lại trang trước.", true);
                 return;
             }
             phoneAttempts = 0;
@@ -145,7 +141,12 @@ void registerNewUser(bool isRegisterByAdmin)
             rawPassword = input("Mật khẩu: ");
             if (rawPassword.empty())
             {
-                print("Mật khẩu không được để trống.", true, ColorEnum::Yellow);
+                print("Mật khẩu không được để trống.", true, ColorEnum::Red);
+                passwordAttempts++;
+            }
+            else if (!PasswordUtils::isValidPassword(rawPassword))
+            {
+                print("Mật khẩu phải chứa ít nhất 6 kí tự", true, ColorEnum::Red);
                 passwordAttempts++;
             }
             else
@@ -156,16 +157,14 @@ void registerNewUser(bool isRegisterByAdmin)
 
             if (passwordAttempts >= 3)
             {
-                print("\nNhập sai 3 lần.", true, ColorEnum::Red);
                 std::string choice = "";
                 do
                 {
-                    choice = input("Nhấn 1 để nhập lại Mật khẩu, hoặc 0 để quay lại: ");
+                    choice = input("Nhấn 1 để nhập lại Mật khẩu, hoặc 0 để quay lại: ", ColorEnum::Yellow);
                 } while (choice != "1" && choice != "0");
 
                 if (choice == "0")
                 {
-                    print("Quay lại trang trước.", true);
                     return;
                 }
                 passwordAttempts = 0;
@@ -203,6 +202,6 @@ void registerNewUser(bool isRegisterByAdmin)
     }
     else
     {
-        print("Đăng ký tài khoản thất bai.", true, ColorEnum::Red);
+        print("Đăng ký tài khoản thất bại.", true, ColorEnum::Red);
     }
 }

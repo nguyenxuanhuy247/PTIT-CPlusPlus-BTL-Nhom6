@@ -43,7 +43,7 @@ int main()
 				user = handleLogin();
 				break;
 			case 0:
-				print("Bạn đã thoát khỏi hệ thống. Tạm biệt.", true);
+				print("Bạn đã thoát khỏi hệ thống. Tạm biệt.", true, ColorEnum::Green);
 				break;
 			default:
 				cout << endl;

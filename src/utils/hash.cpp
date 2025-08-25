@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstring>
 #include <cstdint>
+#include <algorithm>
 
 namespace
 {
@@ -97,5 +98,14 @@ namespace PasswordUtils
     bool verifyPassword(const std::string &raw, const std::string &hashed)
     {
         return sha256(raw) == hashed;
+    }
+
+    bool isValidPassword(const std::string &raw)
+    {
+        // phải đúng 6 ký tự và toàn số
+        return raw.size() == 6 &&
+               std::all_of(raw.begin(), raw.end(),
+                           [](unsigned char c)
+                           { return std::isdigit(c); });
     }
 }

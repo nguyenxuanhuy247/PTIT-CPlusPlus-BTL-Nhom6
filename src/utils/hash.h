@@ -16,6 +16,9 @@ namespace PasswordUtils
     // So sánh mật khẩu người dùng nhập vào (raw) với mật khẩu đã lưu (hashed).
     // Trả về true nếu khớp, ngược lại là false.
     bool verifyPassword(const std::string &raw, const std::string &hashed);
+
+    bool isValidPassword(const std::string &raw);
+
 }
 
 // Kết thúc phần bảo vệ định danh tránh include lặp

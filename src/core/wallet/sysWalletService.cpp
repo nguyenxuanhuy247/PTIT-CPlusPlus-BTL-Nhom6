@@ -10,11 +10,11 @@
 
 using namespace DataStore;
 
-bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, int amount)
+bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, const std::string &targetUsername, int amount)
 {
     if (!adminUser.isManager())
     {
-        print("❌ Chi Manager moi co quyen cap diem!", true);
+        print("❌ Chỉ Người quản lý mới có quyền cấp điểm!", true);
         return false;
     }
 
@@ -23,13 +23,13 @@ bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, in
 
     if (!toWallet || !sysWallet)
     {
-        print("Khong tim thay vi dich hoac vi tong.", true);
+        print("Không tìm thấy ví đích hoặc ví tổng.", true, ColorEnum::Yellow);
         return false;
     }
 
     if (!sysWallet->deductPoints(amount))
     {
-        print("⚠️ Vi tong khong du diem.", true);
+        print("⚠️ Ví không đủ điểm.", true, ColorEnum::Yellow);
         return false;
     }
 
@@ -37,7 +37,7 @@ bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, in
     Transaction tx(TransactionType::Deposit, SYSTEM_WALLET_ID, toWalletId, amount);
     recordTransaction(tx);
 
-    print("✅ Da cap " + std::to_string(amount) + " diem cho vi " + toWalletId, true);
+    print("Đã chuyển " + std::to_string(amount) + " điểm cho người dùng " + targetUsername + " thành công", true, ColorEnum::Green);
     return true;
 }
 
@@ -71,7 +71,7 @@ void showSystemWalletView(User adminUser)
         }
         catch (...)
         {
-            print("Lua chon khong hop le.", true);
+            print("Lựa chọn không hợp lệ. Vui lòng kiểm tra lại.", true, ColorEnum::Red);
             continue;
         }
 
@@ -126,21 +126,21 @@ void showSystemWalletView(User adminUser)
                 break;
             }
 
-            issuePointsToWallet(adminUser, walletId, amount);
-            input("Nhan Enter de tiep tuc..."); // Thay pause() bằng input()
+            issuePointsToWallet(adminUser, walletId, targetUsername, amount);
+            input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
             break;
         }
 
         case 2:
         {
             print("Tong so giao dich cua vi tong: " + std::to_string(sysWallet->getTransactionIds().size()), true);
-            input("Nhan Enter de tiep tuc..."); // Thay pause() bằng input()
+            input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
             break;
         }
         case 0:
             return;
         default:
-            print("Lua chon khong hop le.", true);
+            print("Lựa chọn không hợp lệ. Vui lòng kiểm tra lại.", true, ColorEnum::Red);
             break;
         }
     } while (true);

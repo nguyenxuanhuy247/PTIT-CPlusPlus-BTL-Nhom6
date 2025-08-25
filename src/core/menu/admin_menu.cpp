@@ -31,14 +31,24 @@ void showManagerMenu(User currentUser)
         {
             continue;
         }
-
+        int stt = 1;
         switch (yourChoice)
         {
         case 1:
+        {
+            printTitle("THỐNG KÊ NGƯỜI DÙNG");
             print("Số lượng người dùng: " + std::to_string(getAllUsers().size()), true);
+            print("STT\t|\tTên hiển thị", true);
+            for (const auto &user : getAllUsers())
+            {
+                print(std::to_string(stt) + "\t|\t" + user.getDisplayName(), true);
+                ++stt;
+            }
             break;
+        }
         case 2:
         {
+            printTitle("TỔNG ĐIỂM TOÀN HỆ THỐNG");
             int total = 0;
             for (auto &[id, wallet] : getAllWallets())
                 total += wallet.getPoints();
@@ -46,18 +56,21 @@ void showManagerMenu(User currentUser)
             break;
         }
         case 3:
+        {
             print("Tổng số giao dịch: " + std::to_string(getAllTransactions().size()), true);
             break;
+        }
         case 4:
+        {
             printTitle("TẠO TÀI KHOẢN MỚI");
             registerNewUser(true);
             break;
+        }
         case 5:
         {
             showSystemWalletView(currentUser);
             break;
         }
-
         case 0:
             return;
         }

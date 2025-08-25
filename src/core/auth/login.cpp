@@ -21,7 +21,7 @@ User handleLogin()
         string content = UserFileHelper::readStringFromFile(username + ".json", FileCategory::User);
         if (content.empty())
         {
-            print("Thất bại. Không tìm thấy thông tin người dùng trong hệ thống.", true, ColorEnum::Red);
+            print("Tài khoản không tồn tại. Vui lòng nhập lại.", true, ColorEnum::Red);
             string choice;
             do
             {

@@ -36,7 +36,6 @@ void showUserMenu(User &currentUser)
         {
         case 1:
         {
-
             printTitle("THÔNG TIN CÁ NHÂN");
             print("Tài khoản: " + currentUser.getUsername(), true);
             print("Tên hiển thị: " + currentUser.getDisplayName(), true);
@@ -45,6 +44,7 @@ void showUserMenu(User &currentUser)
         }
         case 2:
         {
+            printTitle("THAY ĐỔI THÔNG TIN CÁ NHÂN");
             std::string newName = input("Nhập tên hiển thị mới: ");
             currentUser.setDisplayName(newName);
             DataStore::syncUser(currentUser); // đồng bộ user sau khi đổi tên
@@ -53,7 +53,21 @@ void showUserMenu(User &currentUser)
         }
         case 3:
         {
+            printTitle("ĐỔI MẬT KHẨU");
             std::string newPassword = input("Nhập mật khẩu mới: ");
+            int passwordAttempts = 0;
+            while (!PasswordUtils::isValidPassword(newPassword) && passwordAttempts < 3)
+            {
+                print("Mật khẩu phải chứa ít nhất 6 kí tự", true, ColorEnum::Red);
+                newPassword = input("Nhập mật khẩu mới: ");
+                passwordAttempts++;
+            }
+            if (!PasswordUtils::isValidPassword(newPassword))
+            {
+                print("Nhập sai quá 3 lần. Đổi mật khẩu thất bại.", true, ColorEnum::Red);
+                break;
+            }
+
             int retryCount = 0;
             bool passwordMatched = false;
             while (retryCount < 3)

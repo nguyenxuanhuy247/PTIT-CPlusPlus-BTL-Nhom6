@@ -93,7 +93,7 @@ string input(const string &prompt, ColorEnum color)
     cout << prompt; // Hiển thị prompt với màu
     resetColor();
     getline(cin, value);
-    return value;
+    return trim(value);
 }
 
 // Tạm dừng chương trình chờ nhấn Enter
