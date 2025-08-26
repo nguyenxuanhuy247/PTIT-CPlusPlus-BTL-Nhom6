@@ -19,7 +19,7 @@ void showWalletMenu(User &user)
     Wallet *wallet = getWalletById(user.getWalletId());
     if (!wallet)
     {
-        print("Không tìm thấy ví của bạn.", true);
+        print("Không tìm thấy ví của bạn.", true, ColorEnum::Red);
         return;
     }
 
@@ -27,7 +27,7 @@ void showWalletMenu(User &user)
     do
     {
         printTitle("VÍ ĐIỂM");
-        print("Số dư: " + std::to_string(wallet->getPoints()) + " điểm", true);
+        print("Số điểm: " + std::to_string(wallet->getPoints()), true);
         print("1. Chuyển điểm", true);
         print("2. Lịch sử giao dịch", true);
         print("0. Quay lại", true);
@@ -48,6 +48,7 @@ void showWalletMenu(User &user)
         case 1:
         {
 
+            printTitle("CHUYỂN ĐIỂM");
             int currentUserWalletPoint = DataStore::getWalletById(user.getWalletId())->getPoints();
             if (currentUserWalletPoint > 0)
             {
@@ -55,7 +56,7 @@ void showWalletMenu(User &user)
             }
             else
             {
-                print("Số điểm hiện tại của bạn là 0. Không thể thực hiện các chức năng ví.", true, ColorEnum::Yellow);
+                print("Số điểm của bạn không đủ để giao dịch", true, ColorEnum::Red);
             }
             break;
         }
@@ -71,14 +72,17 @@ void showWalletMenu(User &user)
     } while (true);
 }
 
-void transferPointsUI(User &user)
+/**
+ * @usage Hàm xử lý việc chuyển điểm giữa hai ví.
+ */
+void transferPointsUI(User &transferUser)
 {
     std::string phone = input("Nhập số điện thoại người nhận: ");
     User *receiverUser = getUserByPhone(phone);
 
     if (!receiverUser)
     {
-        print("Không tìm thấy người nhận với số điện thoại đã nhập.", true, ColorEnum::Yellow);
+        print("Số điện thoại người nhận không đúng.", true, ColorEnum::Red);
         return;
     }
 
@@ -90,13 +94,25 @@ void transferPointsUI(User &user)
     }
     catch (...)
     {
-        print("Số điểm không hợp lệ.", true, ColorEnum::Yellow);
+        print("Số điểm muốn chuyển không hợp lệ.", true, ColorEnum::Red);
         return;
     }
 
     if (amount <= 0)
     {
-        print("Số điểm phải lớn hơn 0.", true, ColorEnum::Yellow);
+        print("Số điểm muốn chuyển phải lớn hơn 0.", true, ColorEnum::Red);
+        return;
+    }
+
+    if (amount > DataStore::getWalletById(transferUser.getWalletId())->getPoints())
+    {
+        print("Số điểm trong ví không đủ để chuyển.", true, ColorEnum::Red);
+        return;
+    }
+
+    if (transferUser.getDisplayName() == receiverUser->getDisplayName())
+    {
+        print("Không thể tự chuyển cho chính mình.", true, ColorEnum::Red);
         return;
     }
 
@@ -109,13 +125,13 @@ void transferPointsUI(User &user)
         return;
     }
 
-    if (!OtpManager::confirmOtpForAction(user.getPhoneNumber()))
+    if (!OtpManager::confirmOtpForAction(transferUser.getPhoneNumber()))
     {
         print("❌ Xác thực OTP thất bại. Hủy giao dịch.", true, ColorEnum::Red);
         return;
     }
 
-    bool success = transferPointsBetweenWallets(user.getWalletId(), receiverUser->getWalletId(), amount);
+    bool success = transferPointsBetweenWallets(transferUser.getWalletId(), receiverUser->getWalletId(), amount);
     if (!success)
     {
         print("Chuyển điểm thất bại.", true, ColorEnum::Red);
@@ -126,21 +142,30 @@ bool transferPointsBetweenWallets(const std::string &fromId, const std::string &
 {
     Wallet *from = getWalletById(fromId);
     Wallet *to = getWalletById(toId);
+    User *transferUser = getUserByWalletId(fromId);
+    User *receiveUser = getUserByWalletId(toId);
+
     if (toId == SYSTEM_WALLET_ID)
     {
-        std::cerr << "❌ Không thể chuyển điểm vào ví tổng!\n";
+        print("Không thể chuyển điểm vào ví tổng.", true, ColorEnum::Red);
         return false;
     }
 
     if (!from || !to)
     {
-        std::cerr << "Không tìm thấy ví nguồn hoặc ví đích.\n";
+        print("Không tìm thấy ví nguồn hoặc ví đích.", true, ColorEnum::Red);
         return false;
     }
 
     if (from->getPoints() < amount)
     {
-        std::cerr << "Số dư không đủ. Không thể chuyển.\n";
+        print("Không điểm không đủ để thực hiện chuyển.", true, ColorEnum::Red);
+        return false;
+    }
+
+    if (transferUser == receiveUser)
+    {
+        print("Không thể tự chuyển cho chính mình.", true, ColorEnum::Red);
         return false;
     }
 
@@ -156,10 +181,13 @@ bool transferPointsBetweenWallets(const std::string &fromId, const std::string &
     DataStore::syncWallet(from->getWalletId()); // ✅ gọi qua DataStore
     DataStore::syncWallet(to->getWalletId());
 
-    std::cout << "Chuyển " << amount << " điểm thành công!\n";
+    print("Đã chuyển " + std::to_string(amount) + " điểm cho người dùng " + receiveUser->getDisplayName() + " có số điện thoại " + receiveUser->getPhoneNumber() + " thành công", true, ColorEnum::Green);
     return true;
 }
 
+/**
+ * @usage Hiển thị lich sử giao dịch của người dùng.
+ */
 void showTransactionHistory(User &user)
 {
     std::string walletId = user.getWalletId();
@@ -170,14 +198,21 @@ void showTransactionHistory(User &user)
     bool found = false;
     for (const auto &tx : transactions)
     {
-        if (tx.getFromWalletId() == walletId || tx.getToWalletId() == walletId)
+        if (tx.getFromWalletId() == walletId)
         {
-            print(tx.toString(), true, ColorEnum::Blue);
+
+            print(tx.toString(walletId), true, ColorEnum::Red);
+            found = true;
+        }
+        else if (tx.getToWalletId() == walletId)
+        {
+
+            print(tx.toString(walletId), true, ColorEnum::Green);
             found = true;
         }
     }
     if (!found)
     {
-        print("Không có giao dịch nào liên quan tới ví của bạn.", true);
+        print("Không có giao dịch.", true);
     }
 }

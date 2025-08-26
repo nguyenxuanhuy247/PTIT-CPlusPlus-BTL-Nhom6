@@ -43,14 +43,17 @@ bool phoneExists(const std::string &phone)
     return false;
 }
 
-void registerNewUser(bool isRegisterByAdmin)
+void registerNewUser(bool isRegisterByAdmin, bool hasTitle)
 {
     std::string username;
     std::string phone;
     std::string rawPassword;
     bool isAutoPass = false;
 
-    printTitle("ĐĂNG KÝ");
+    if (hasTitle)
+    {
+        printTitle("ĐĂNG KÝ");
+    }
 
     int usernameAttempts = 0;
     bool usernameInputSuccess = false;
@@ -107,7 +110,7 @@ void registerNewUser(bool isRegisterByAdmin)
         }
         else if (phoneExists(phone))
         {
-            print("Số điện thoại đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Yellow);
+            print("Số điện thoại đã tồn tại. Vui lòng nhập lại.", true, ColorEnum::Red);
             phoneAttempts++;
         }
         else

@@ -34,7 +34,7 @@ std::time_t Transaction::getTimestamp() const { return timestamp; }
 TransactionType Transaction::getType() const { return type; }
 void Transaction::setTimestamp(std::time_t t) { timestamp = t; }
 
-std::string Transaction::toString() const
+std::string Transaction::toString(const std::string &currentWalletId) const
 {
     char buffer[100];
     std::tm *timeInfo;
@@ -44,7 +44,7 @@ std::string Transaction::toString() const
 
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeInfo);
 
-    std::string typeStr = (type == TransactionType::Deposit) ? "DEPOSIT" : "TRANSFER";
+    std::string typeStr = (currentWalletId == fromWalletId) ? "CHUYỂN" : "NHẬN";
 
     // 🔎 Tìm người gửi
     std::string senderInfo = fromWalletId;
@@ -54,19 +54,19 @@ std::string Transaction::toString() const
     {
         if (user.getWalletId() == fromWalletId)
         {
-            senderInfo = user.getPhoneNumber() + " (" + user.getDisplayName() + ")";
+            senderInfo = user.getDisplayName() + " (" + user.getPhoneNumber() + ")";
         }
         if (user.getWalletId() == toWalletId)
         {
-            receiverInfo = user.getPhoneNumber() + " (" + user.getDisplayName() + ")";
+            receiverInfo = user.getDisplayName() + " (" + user.getPhoneNumber() + ")";
         }
     }
 
     return "[" + std::string(buffer) + "] " + typeStr +
-           " | TxID: " + transactionId +
-           " | From: " + senderInfo +
-           " To: " + receiverInfo +
-           " | Amount: " + std::to_string(amount);
+           " | ID: " + (transactionId == "WALLET_SYS" ? "Ví tổng" : transactionId) +
+           " | Từ " + senderInfo +
+           " đến " + receiverInfo +
+           " | Số điểm: " + std::to_string(amount);
 }
 
 void recordTransaction(const Transaction &tx)

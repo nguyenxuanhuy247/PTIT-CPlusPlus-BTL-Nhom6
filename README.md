@@ -10,18 +10,22 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
     - Khởi tạo và dựng cấu trúc dự án
     - Phân công công việc, giám sát tiến độ
-    - Viết tài liệu hướng dẫn cài đặt 
+    - Viết tài liệu hướng dẫn cài đặt, huong 
     - Phụ trách code phần đăng nhập
 
-### 2. Đức Linh
+### 2. Đào Đức Linh
 
     - Phục trách code phần Đăng ký
-    - Phục trách code phần Giao dich
+    - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch
 
 ### 3. Nguyễn Anh Khoa
 
-    - Phục trách code phần Tải dữ liệu và danh sách menu
-    - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch
+    - Phục trách code phần Tải dữ liệu hệ thốngvà danh sách menu
+    - Phân chia menu Người quản lý (admin) và Người dùng (user)
+
+### 4. Nguyễn Khắc Ngọc (Đã thôi học)
+
+    - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch (chuyển giao lại cho Đào Đức Linh)
 
 ## CÁC CHỨC NĂNG CHÍNH
 

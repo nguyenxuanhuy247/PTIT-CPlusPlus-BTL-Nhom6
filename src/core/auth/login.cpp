@@ -59,12 +59,47 @@ User handleLogin()
 
                     if (user.getIsAutoPassword())
                     {
-                        print("Vui lòng thiết lập mật khẩu.", true, ColorEnum::Yellow);
+                        print("Tài khoản được tạo bởi Người quản lý (admin). Vui lòng thiết lập mật khẩu.", true, ColorEnum::Yellow);
                         string newPass;
+                        int passAttempts = 0;
+                        bool passInputSuccess = false;
+
                         do
                         {
-                            newPass = input("Nhập khẩu mới: ");
-                        } while (newPass.empty());
+                            newPass = input("Nhập mật khẩu mới: ");
+
+                            if (newPass.empty())
+                            {
+                                print("Mật khẩu không được để trống.", true, ColorEnum::Red);
+                                passAttempts++;
+                            }
+                            else if (!PasswordUtils::isValidPassword(newPass))
+                            {
+                                print("Mật khẩu phải chứa ít nhất 6 ký tự.", true, ColorEnum::Red);
+                                passAttempts++;
+                            }
+                            else
+                            {
+                                passInputSuccess = true;
+                                break;
+                            }
+
+                            if (passAttempts >= 3)
+                            {
+                                string choice;
+                                do
+                                {
+                                    choice = input("Nhấn 1 để nhập lại Mật khẩu, hoặc 0 để quay lại: ", ColorEnum::Yellow);
+                                } while (choice != "1" && choice != "0");
+
+                                if (choice == "0")
+                                {
+                                    print("Quay lại trang trước.", true);
+                                    return User(username, "", UserRole::Guest, username);
+                                }
+                                passAttempts = 0;
+                            }
+                        } while (true);
 
                         user.setPassword(newPass);
                         user.setIsAutoPassword(false);

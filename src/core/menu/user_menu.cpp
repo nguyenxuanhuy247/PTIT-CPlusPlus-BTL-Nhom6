@@ -21,14 +21,14 @@ void showUserMenu(User &currentUser)
         print("4. Ví điểm", true);
         print("0. Đăng xuất", true);
 
-        std::string choiceStr = input("Vui lòng nhập lựa chọn của bạn: ");
+        std::string choiceStr = input("Nhập lựa chọn của bạn: ");
         try
         {
             choice = std::stoi(choiceStr);
         }
         catch (...)
         {
-            print("Lựa chọn không hợp lệ. Vui lòng chọn lại.", true, ColorEnum::Yellow);
+            print("Lựa chọn không hợp lệ. Vui lòng kiểm tra lại.", true, ColorEnum::Red);
             continue;
         }
 
@@ -96,7 +96,7 @@ void showUserMenu(User &currentUser)
             }
             currentUser.setPassword(newPassword);
             DataStore::syncUser(currentUser); //  đồng bộ user sau khi đổi mật khẩu
-            print("Cập nhật mật khẩu thành công.", true, ColorEnum::Green);
+            print("Cập nhật mật khẩu thành công!", true, ColorEnum::Green);
             break;
         }
         case 4:
@@ -112,7 +112,7 @@ void showUserMenu(User &currentUser)
         }
         default:
         {
-            print("Lựa chọn không hợp lệ. Vui lòng chọn lại.", true, ColorEnum::Yellow);
+            print("Lựa chọn không hợp lệ. Vui lòng kiểm tra lại.", true, ColorEnum::Red);
             break;
         }
         }

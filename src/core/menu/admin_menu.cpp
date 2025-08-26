@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iomanip>
+
 #include "../wallet/sysWalletService.h"
 #include "../models/User.h"
 #include "../data/dataStore.h"
@@ -15,8 +17,8 @@ void showManagerMenu(User currentUser)
     {
         printTitle("MENU QUẢN TRỊ VIÊN");
         print("1. Thống kê số lượng người dùng", true);
-        print("2. Tổng điểm toàn hệ thống", true);
-        print("3. Tổng số giao dịch", true);
+        print("2. Thống kê điểm trong toàn hệ thống", true);
+        print("3. Thống kê số giao dịch", true);
         print("4. Tạo tài khoản người dùng", true);
         print("5. Ví tổng", true);
         print("0. Đăng xuất", true);
@@ -38,7 +40,7 @@ void showManagerMenu(User currentUser)
         {
             printTitle("THỐNG KÊ NGƯỜI DÙNG");
             print("Số lượng người dùng: " + std::to_string(getAllUsers().size()), true);
-            print("STT\t|\tTên hiển thị", true);
+            print("STT\t|\tTên hiển thị", true, ColorEnum::Blue);
             for (const auto &user : getAllUsers())
             {
                 print(std::to_string(stt) + "\t|\t" + user.getDisplayName(), true);
@@ -48,22 +50,43 @@ void showManagerMenu(User currentUser)
         }
         case 2:
         {
-            printTitle("TỔNG ĐIỂM TOÀN HỆ THỐNG");
+            printTitle("THỐNG KÊ ĐIỂM TRONG TOÀN HỆ THỐNG");
             int total = 0;
             for (auto &[id, wallet] : getAllWallets())
                 total += wallet.getPoints();
             print("Tổng điểm của hệ thống: " + std::to_string(total), true);
+
+            // In tiêu đề bảng
+            std::cout << std::left << std::setw(5) << "STT"
+                      << " | " << std::setw(20) << "Tên hiển thị       "
+                      << " | " << std::setw(10) << "Số điểm" << std::endl;
+
+            int stt = 1;
+            for (auto &[id, wallet] : getAllWallets())
+            {
+                User *user = getUserByWalletId(wallet.getWalletId());
+                if (!user)
+                    continue;
+                std::string name = user ? user->getDisplayName() : "(Trống)";
+
+                std::cout << std::left << std::setw(5) << stt
+                          << " | " << std::setw(20) << name
+                          << " | " << std::setw(10) << wallet.getPoints()
+                          << std::endl;
+                ++stt;
+            }
             break;
         }
         case 3:
         {
+            printTitle("THỐNG KÊ GIAO DỊCH");
             print("Tổng số giao dịch: " + std::to_string(getAllTransactions().size()), true);
             break;
         }
         case 4:
         {
             printTitle("TẠO TÀI KHOẢN MỚI");
-            registerNewUser(true);
+            registerNewUser(true, false);
             break;
         }
         case 5:

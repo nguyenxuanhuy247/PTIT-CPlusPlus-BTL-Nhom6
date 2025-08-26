@@ -43,6 +43,16 @@ namespace DataStore
         return nullptr;
     }
 
+    User *getUserByWalletId(const std::string &walletId)
+    {
+        for (auto &user : allUsers)
+        {
+            if (user.getWalletId() == walletId)
+                return &user;
+        }
+        return nullptr;
+    }
+
     bool syncWallet(const std::string &walletId)
     {
         auto it = allWallets.find(walletId);

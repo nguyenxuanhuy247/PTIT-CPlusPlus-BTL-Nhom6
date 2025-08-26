@@ -10,7 +10,7 @@
 
 using namespace DataStore;
 
-bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, const std::string &targetUsername, int amount)
+bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, const std::string &targetPhonenumber, int amount)
 {
     if (!adminUser.isManager())
     {
@@ -20,6 +20,7 @@ bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, co
 
     Wallet *toWallet = getWalletById(toWalletId);
     Wallet *sysWallet = getWalletById(SYSTEM_WALLET_ID);
+    User *targetUser = getUserByPhone(targetPhonenumber);
 
     if (!toWallet || !sysWallet)
     {
@@ -34,10 +35,10 @@ bool issuePointsToWallet(const User adminUser, const std::string &toWalletId, co
     }
 
     toWallet->addPoints(amount);
-    Transaction tx(TransactionType::Deposit, SYSTEM_WALLET_ID, toWalletId, amount);
+    Transaction tx(TransactionType::Transfer, SYSTEM_WALLET_ID, toWalletId, amount);
     recordTransaction(tx);
 
-    print("Đã chuyển " + std::to_string(amount) + " điểm cho người dùng " + targetUsername + " thành công", true, ColorEnum::Green);
+    print("Đã chuyển " + std::to_string(amount) + " điểm cho người dùng " + targetUser->getDisplayName() + " có số điện thoại " + targetUser->getPhoneNumber() + " thành công", true, ColorEnum::Green);
     return true;
 }
 
@@ -45,14 +46,14 @@ void showSystemWalletView(User adminUser)
 {
     if (!adminUser.isManager())
     {
-        print("❌ Chỉ admin mới có quyền truy cập!", true);
+        print("❌ Chỉ admin mới có quyền truy cập!", true, ColorEnum::Red);
         return;
     }
 
     Wallet *sysWallet = getWalletById(SYSTEM_WALLET_ID);
     if (!sysWallet)
     {
-        print("⚠️ Ví tổng không tồn tại.", true);
+        print("⚠️ Ví tổng không tồn tại.", true, ColorEnum::Red);
         return;
     }
 
@@ -61,7 +62,7 @@ void showSystemWalletView(User adminUser)
     {
         printTitle("MENU VÍ TỔNG");
         print("1. Cấp điểm cho người dùng", true);
-        print("2. Xem tổng số giao dịch trong ví", true);
+        print("2. Lịch sử giao dịch", true);
         print("0. Quay lại", true);
 
         std::string choiceStr = input("Vui lòng nhập lựa chọn của bạn: ");
@@ -79,13 +80,14 @@ void showSystemWalletView(User adminUser)
         {
         case 1:
         {
-            std::string targetUsername = input("Nhập username của người nhận: ");
+            printTitle("CẤP ĐIỂM CHO NGƯỜI DÙNG");
+            std::string targetPhonenumber = input("Nhập số điện thoại của người nhận: ");
             const auto &users = DataStore::getAllUsers();
 
             const User *targetUser = nullptr;
             for (const auto &user : users)
             {
-                if (user.getUsername() == targetUsername)
+                if (user.getPhoneNumber() == targetPhonenumber)
                 {
                     targetUser = &user;
                     break;
@@ -94,8 +96,7 @@ void showSystemWalletView(User adminUser)
 
             if (!targetUser)
             {
-                print("Không tìm thây người dùng.", true);
-                input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
+                print("Không tìm thây người dùng.", true, ColorEnum::Red);
                 break;
             }
 
@@ -103,8 +104,7 @@ void showSystemWalletView(User adminUser)
             Wallet *targetWallet = getWalletById(walletId);
             if (!targetWallet)
             {
-                print("Người dùng chưa có ví.", true);
-                input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
+                print("Người dùng chưa có ví.", true, ColorEnum::Red);
                 break;
             }
 
@@ -116,25 +116,41 @@ void showSystemWalletView(User adminUser)
             }
             catch (...)
             {
-                print("Số điểm không hợp lệ.", true);
+                print("Số điểm không hợp lệ.", true, ColorEnum::Red);
                 break;
             }
 
             if (!OtpManager::confirmOtpForAction(adminUser.getPhoneNumber()))
             {
-                print("Xac thuc OTP that bai. Huy cap diem.", true);
+                print("Xác thực OTP thất bại. Hủy bỏ quy trình cấp điểm.", true, ColorEnum::Red);
                 break;
             }
 
-            issuePointsToWallet(adminUser, walletId, targetUsername, amount);
-            input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
+            issuePointsToWallet(adminUser, walletId, targetPhonenumber, amount);
             break;
         }
 
         case 2:
         {
-            print("Tong so giao dich cua vi tong: " + std::to_string(sysWallet->getTransactionIds().size()), true);
-            input("Nhấn Enter để tiếp tục..."); // Thay pause() bằng input()
+            printTitle("LỊCH SỬ GIAO DỊCH CỦA VÍ TỔNG");
+            print("Tổng số giao dịch: " + std::to_string(sysWallet->getTransactionIds().size()), true);
+
+            DataStore::loadAllTransactions();
+            const auto &transactions = getAllTransactions();
+            bool found = false;
+            for (const auto &tx : transactions)
+            {
+                if (tx.getFromWalletId() == "WALLET_SYS")
+                {
+
+                    print(tx.toString(), true, tx.getType() == TransactionType::Deposit ? ColorEnum::Green : ColorEnum::Red);
+                    found = true;
+                }
+            }
+            if (!found)
+            {
+                print("Không có giao dịch.", true);
+            }
             break;
         }
         case 0:

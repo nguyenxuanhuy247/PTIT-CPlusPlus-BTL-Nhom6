@@ -24,6 +24,7 @@ namespace DataStore
 
     Wallet *getWalletById(const std::string &id);
     User *getUserByPhone(const std::string &phone);
+    User *getUserByWalletId(const std::string &walletId);
 
     // ✅ Thêm các hàm đồng bộ
     bool syncWallet(const std::string &walletId);
