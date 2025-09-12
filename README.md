@@ -10,22 +10,26 @@ Hệ thống ví điểm thưởng là một ứng dụng dùng để quản lý
 
     - Khởi tạo và dựng cấu trúc dự án
     - Phân công công việc, giám sát tiến độ
-    - Viết tài liệu hướng dẫn cài đặt, huong 
-    - Phụ trách code phần đăng nhập
+    - Viết tài liệu hướng dẫn cài đặt
+    - Phụ trách code phần Đăng nhập
+    - Review và chỉnh sửa code của dự án
 
 ### 2. Đào Đức Linh
 
     - Phục trách code phần Đăng ký
     - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch
+    - Viết tài liệu mô tả chức năng và nghiệp vụ
 
 ### 3. Nguyễn Anh Khoa
 
-    - Phục trách code phần Tải dữ liệu hệ thốngvà danh sách menu
+    - Phục trách code phần Tải dữ liệu hệ thống và đanh sách menu
     - Phân chia menu Người quản lý (admin) và Người dùng (user)
+    - Viết tài liệu mô tả chức năng và nghiệp vụ
 
 ### 4. Nguyễn Khắc Ngọc (Đã thôi học)
 
-    - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch (chuyển giao lại cho Đào Đức Linh)
+    - Phục trách code phần Ví, giao dịch và Lịch sử giao dịch 
+    (chuyển giao lại cho Đào Đức Linh)
 
 ## CÁC CHỨC NĂNG CHÍNH
 
@@ -148,7 +152,7 @@ Lưu ý: Không được phép thay đổi tên tài khoản đăng nhập.
 
 Lưu ý : Khi tiến hành build lại, phải xóa thư mục build đi, nếu bị lỗi không xóa được là do ứng dụng vẫn đang chạy file reward_wallet.exe, ta tiến hành như sau:
 
--   Cách 1 : Hoặc Mở Tab Terminal, nhấn Ctrl + C để thoát lệnh
+-   Cách 1 : Hoặc Mở Tab Terminal, nhấn Ctrl + C để dừng chương trình
 -   Cách 2 :
     -   Nhấn tổ hợp phím Ctrl + Alt + Delete
-    -   Mở Tab Details, chọn reward_wallet.exe, sau đó nhân End task để đóng tiến trình
+    -   Mở Tab Details, chọn reward_wallet.exe, sau đó nhân End task để đóng chương trình
